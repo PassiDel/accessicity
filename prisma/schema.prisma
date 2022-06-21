@@ -1,0 +1,93 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          Int              @id @default(autoincrement())
+  createdAt   DateTime         @default(now())
+  email       String           @unique
+  name        String
+  password    String
+  role        Role             @default(USER)
+  comments    Comment[]
+  disabilitys UserDisability[]
+}
+
+model UserDisability {
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
+  disability   Disability @relation(fields: [disabilityId], references: [id])
+  disabilityId Int
+  createdAt    DateTime   @default(now())
+  verified     Boolean    @default(false)
+
+  @@unique([userId, disabilityId])
+}
+
+// Source https://opendata-esri-de.opendata.arcgis.com/datasets/esri-de-content::vg250-gemeindegrenzen/about
+model City {
+  id       Int       @id @default(autoincrement())
+  name     String
+  slug     String    @unique
+  loc_lat  Decimal   @db.Decimal(8, 6)
+  loc_lon  Decimal   @db.Decimal(9, 6)
+  outline  Json?
+  loc_zoom Int       @db.TinyInt()
+  comments Comment[]
+  ranking  Ranking[]
+}
+
+model Comment {
+  id         Int                 @id @default(autoincrement())
+  createdAt  DateTime            @default(now())
+  public     Boolean             @default(false)
+  title      String              @db.VarChar(255)
+  message    String              @db.Text
+  rating     Int                 @default(0) @db.TinyInt()
+  author     User                @relation(fields: [authorId], references: [id])
+  authorId   Int
+  city       City                @relation(fields: [cityId], references: [id])
+  cityId     Int
+  disability CommentDisablilty[]
+}
+
+model CommentDisablilty {
+  disability   Disability @relation(fields: [disabilityId], references: [id])
+  disabilityId Int
+  comment      Comment    @relation(fields: [commentId], references: [id])
+  commentId    Int
+  rating       Int        @default(0) @db.TinyInt()
+
+  @@unique([commentId, disabilityId])
+}
+
+model Disability {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(255)
+  slug              String              @unique
+  description       String?             @db.Text
+  icon              String?
+  ranking           Ranking[]
+  UserDisability    UserDisability[]
+  CommentDisablilty CommentDisablilty[]
+}
+
+model Ranking {
+  city         City       @relation(fields: [cityId], references: [id])
+  cityId       Int
+  disability   Disability @relation(fields: [disabilityId], references: [id])
+  disabilityId Int
+  value        Decimal    @db.Decimal(6, 5)
+
+  @@unique([cityId, disabilityId])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
