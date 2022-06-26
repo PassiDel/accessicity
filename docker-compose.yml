@@ -2,8 +2,37 @@ version: "3"
 volumes:
   mysql:
     driver: local
+  dev_db:
+    driver: local
 
 services:
+  dev_db:
+    container_name: dev_db
+    image: mariadb:10.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${DATABASE_DATABASE}
+    command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
+    ports:
+      - "127.0.0.1:${DATABASE_PORT}:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=${DATABASE_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - dev_db:/var/lib/mysql
+  accessicity:
+    build:
+      context: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
   mariadb:
     image: mariadb:10.5
     restart: always
@@ -13,8 +42,6 @@ services:
       - MYSQL_PASSWORD=${DATABASE_PASSWORD}
       - MYSQL_DATABASE=${DATABASE_DATABASE}
     command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
-    ports:
-      - "127.0.0.1:${DATABASE_PORT}:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=${DATABASE_PASSWORD}"]
       interval: 10s

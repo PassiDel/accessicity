@@ -5,7 +5,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "tail": "npx tailwind-config-viewer -o"
+    "tail": "npx tailwind-config-viewer -o",
+    "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
     "@intlify/nuxt3": "^0.2.2",
