@@ -1,0 +1,9 @@
+other:
+  test: Dies ist ein Test
+  varr: hallo %{world}!
+darkmode:
+  system: System
+  light: Hell
+  dark: Dunkel
+  sepia: Sepia
+  mode: "Farbmodus: %{mode}"

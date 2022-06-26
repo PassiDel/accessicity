@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import {useCounterStore} from "~/store/counter";
+
 const colorMode = useColorMode()
 
-const count = ref(0)
+const counter = useCounterStore()
 </script>
 
 <template>
@@ -13,9 +15,9 @@ const count = ref(0)
         hover:bg-yellow-600
         text-rose-200
         transition duration-300 ease-out"
-        @click.prevent="count++"
-    >{{ count }}</button>
-    <h1 class="text-slate-900 dark:text-white">Color mode: {{ $colorMode.preference }}</h1>
+        @click.prevent="counter.increment()"
+    >{{ counter.count }}</button>
+    <h1 class="text-slate-900 dark:text-white">{{ $t('darkmode.mode', {mode: $t(`darkmode.${$colorMode.preference}`)}) }}</h1>
 
   </div>
 </template>

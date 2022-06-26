@@ -1,0 +1,9 @@
+other:
+  test: this is a test
+  varr: hello %{world}!
+darkmode:
+  system: System
+  light: Light
+  dark: Dark
+  sepia: Sepia
+  mode: "Color mode: %{mode}"
