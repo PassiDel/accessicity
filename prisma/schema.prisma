@@ -69,6 +69,7 @@ model CommentDisablilty {
 model Disability {
   id                Int                 @id @default(autoincrement())
   name              String              @db.VarChar(255)
+  trans_name        String?             @db.VarChar(255)
   slug              String              @unique
   description       String?             @db.Text
   icon              String?

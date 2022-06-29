@@ -5,15 +5,25 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "tail": "npx tailwind-config-viewer -o"
+    "tail": "npx tailwind-config-viewer -o",
+    "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
+    "@intlify/nuxt3": "^0.2.2",
     "@nuxtjs/color-mode": "^3.1.4",
     "@nuxtjs/tailwindcss": "^5.1.2",
+    "@types/jsonwebtoken": "^8.5.8",
     "nuxt": "3.0.0-rc.4",
     "prisma": "^3.15.2"
   },
   "dependencies": {
-    "@prisma/client": "^3.15.2"
+    "@pinia/nuxt": "^0.1.9",
+    "@prisma/client": "^3.15.2",
+    "argon2": "^0.28.5",
+    "cookie": "^0.5.0",
+    "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "pinia": "^2.0.14",
+    "pinia-plugin-persistedstate-2": "^1.0.0"
   }
 }
