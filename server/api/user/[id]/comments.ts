@@ -31,11 +31,10 @@ export default defineEventHandler(async (event) => {
         shouldSkip.cursor = {id: parseInt(pointer)}
     }
 
-    // TODO: translate the disability, based on trans_name
-    const comments = prisma.comment.findMany({
+    return prisma.comment.findMany({
         take: amountOfComments,
         orderBy: {
-          createdAt: 'desc'
+            createdAt: 'desc'
         },
         ...shouldSkip,
         where: {authorId: userId, ...shouldPublic},
@@ -68,6 +67,4 @@ export default defineEventHandler(async (event) => {
             }
         }
     })
-
-    return comments
 })
