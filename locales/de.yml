@@ -7,3 +7,7 @@ darkmode:
   dark: Dunkel
   sepia: Sepia
   mode: "Farbmodus: %{mode}"
+disability:
+  wheelchair:
+    name: Rollstuhl
+    desc: Ist auf einen Rollstuhl angewiesen

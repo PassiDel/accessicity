@@ -7,3 +7,7 @@ darkmode:
   dark: Dark
   sepia: Sepia
   mode: "Color mode: %{mode}"
+disability:
+  wheelchair:
+    name: Wheelchair
+    desc: Has to use a wheelchair
