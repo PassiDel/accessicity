@@ -12,6 +12,22 @@ export default defineEventHandler(async (event) => {
             id: true,
             name: true,
             createdAt: true,
+            disabilitys: {
+                select: {
+                    verified: true,
+                    createdAt: true,
+                    disability: {
+                        select: {
+                            id: true,
+                            slug: true,
+                            icon: true,
+                        }
+                    }
+                },
+                orderBy: {
+                    verified: 'desc'
+                }
+            }
         }})
 
     if (!user)
