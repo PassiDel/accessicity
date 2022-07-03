@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     if (!event.context.user)
         return sendError(event, createError({statusCode: 403, statusMessage: 'Forbidden'}))
 
-    const amountOfRankings = 1;
+    const amountOfRankings = 10;
     const disabilityId = parseInt(event.context.params.id)
 
     const {page = "1"} = useQuery(event)
