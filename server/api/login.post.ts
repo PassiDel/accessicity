@@ -1,7 +1,7 @@
 import {PrismaClient} from '@prisma/client'
 import argon2 from 'argon2'
 import jwt from 'jsonwebtoken'
-import {sendError, createError, useBody, defineEventHandler} from "h3";
+import {createError, defineEventHandler, sendError, useBody} from "h3";
 
 const prisma = new PrismaClient()
 
@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
         userId: user.id,
         name: user.name,
         email: user.email,
+        role: user.role === 'USER' ? undefined : user.role
     }, process.env.JWT_SECRET);
 
     return {

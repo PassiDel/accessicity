@@ -6,7 +6,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "tail": "npx tailwind-config-viewer -o",
-    "start": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs",
+    "studio": "npx prisma studio"
   },
   "devDependencies": {
     "@intlify/nuxt3": "^0.2.2",

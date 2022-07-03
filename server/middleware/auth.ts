@@ -24,7 +24,8 @@ export default defineEventHandler((event) => {
         event.context.user = {
             id: payload.userId,
             name: payload.name,
-            email: payload.email
+            email: payload.email,
+            role: payload.role ? payload.role : 'USER'
         }
 
     } catch (err) {
