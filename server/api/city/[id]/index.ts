@@ -1,13 +1,36 @@
-import {createError, defineEventHandler, sendError, useQuery} from "h3";
+import {defineEventHandler} from "h3";
 import {PrismaClient} from "@prisma/client";
 
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-    if (!event.context.user)
-        return sendError(event, createError({statusCode: 403, statusMessage: 'Forbidden'}))
 
-    // TODO: Add feature: get a city
+    const cityId = parseInt(event.context.params.id)
 
-    return false
+    return await prisma.city.findUnique({
+        where: {id: cityId},
+        select: {
+            id: true,
+            name: true,
+            slug: true,
+            loc_lat: true,
+            loc_lon: true,
+            outline: true,
+            loc_zoom: true,
+            ranking: {
+                select: {
+                    value: true,
+                    disability: {
+                        select: {
+                            id: true,
+                            name: true,
+                            slug: true,
+                            trans_name: true,
+                            icon: true
+                        }
+                    }
+                }
+            }
+        }
+    })
 })
