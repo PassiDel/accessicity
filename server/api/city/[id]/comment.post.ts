@@ -21,12 +21,10 @@ export default defineEventHandler(async (event) => {
     if (!event.context.user)
         return sendError(event, createError({statusCode: 403, statusMessage: 'Forbidden'}))
 
-    // TODO: Add feature: add a new comment to a city
-
     const userId = event.context.user.id;
     const cityId = parseInt(event.context.params.id)
-    // TODO: add input validation
 
+    // TODO: add input validation
     const {title, message, rating, disability} = await useBody<AddCommentPayload>(event)
     return await prisma.comment.create({
         data: {
