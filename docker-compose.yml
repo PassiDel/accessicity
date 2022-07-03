@@ -25,6 +25,7 @@ services:
     volumes:
       - dev_db:/var/lib/mysql
   accessicity:
+    image: ghcr.io/passidel/accessicity:${ACCESS_VERSION}
     build:
       context: .
     ports:

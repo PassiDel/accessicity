@@ -25,3 +25,4 @@ COPY prisma ./prisma/
 RUN npm install --production --frozen-lockfile && npm cache verify
 
 COPY --from=builder /tmp/build-env/.output ./.output
+LABEL org.opencontainers.image.source=https://github.com/PassiDel/accessicity
