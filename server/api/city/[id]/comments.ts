@@ -7,7 +7,72 @@ export default defineEventHandler(async (event) => {
     if (!event.context.user)
         return sendError(event, createError({statusCode: 403, statusMessage: 'Forbidden'}))
 
-    // TODO: Add feature: get paginated list of comments for a city
+    const amountOfComments = 10;
+    const shouldSkip = {
+        skip: undefined,
+        cursor: undefined
+    };
 
-    return false
+    const cityId = parseInt(event.context.params.id)
+
+    const {pointer = undefined} = useQuery(event)
+
+    if (typeof pointer === "string") {
+        shouldSkip.skip = 1
+        shouldSkip.cursor = {id: parseInt(pointer)}
+    }
+
+    return await prisma.comment.findMany({
+        take: amountOfComments,
+        orderBy: {
+            createdAt: 'desc'
+        },
+        ...shouldSkip,
+        where: {
+            cityId,
+            public: true
+        },
+        select: {
+            id: true,
+            createdAt: true,
+            title: true,
+            message: true,
+            rating: true,
+            author: {
+                select: {
+                    id: true,
+                    name: true,
+                    createdAt: true,
+                    disabilitys: {
+                        select: {
+                            verified: true,
+                            createdAt: true,
+                            disability: {
+                                select: {
+                                    id: true,
+                                    slug: true,
+                                    icon: true,
+                                }
+                            }
+                        },
+                        orderBy: {
+                            verified: 'desc'
+                        }
+                    }
+                }
+            },
+            disability: {
+                select: {
+                    rating: true,
+                    disability: {
+                        select: {
+                            id: true,
+                            slug: true,
+                            icon: true
+                        }
+                    }
+                }
+            }
+        }
+    })
 })
