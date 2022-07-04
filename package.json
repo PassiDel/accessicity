@@ -13,13 +13,16 @@
     "@intlify/nuxt3": "^0.2.2",
     "@nuxtjs/color-mode": "^3.1.4",
     "@nuxtjs/tailwindcss": "^5.1.2",
+    "@types/accept-language-parser": "^1.5.3",
     "@types/jsonwebtoken": "^8.5.8",
     "nuxt": "3.0.0-rc.4",
+    "nuxt-schema-org": "^0.6.2",
     "prisma": "^3.15.2"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.1.9",
     "@prisma/client": "^3.15.2",
+    "accept-language-parser": "^1.5.0",
     "argon2": "^0.28.5",
     "cookie": "^0.5.0",
     "js-cookie": "^3.0.1",

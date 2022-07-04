@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import {useCounterStore} from "~/store/counter";
+import {definePageMeta, useColorMode} from "#imports";
 
 const colorMode = useColorMode()
 
 const counter = useCounterStore()
+
+definePageMeta({
+  title: 'Index'
+})
 </script>
 
 <template>

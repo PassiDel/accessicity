@@ -1,10 +1,18 @@
 import {defineStore} from "pinia";
-import {ref, watch} from "#imports";
+import {useRequestHeaders} from "#imports";
 import {useI18n} from "vue-i18n";
+import parser from "accept-language-parser";
 
 
 export const useLangStore = defineStore('lang', {
         state: () => {
+            if (process.server) {
+                const lang = useRequestHeaders(['accept-language'])?.["accept-language"] ?? 'en'
+                const langSelect = parser.pick(['en', 'de'], lang)
+                return {
+                    lang: langSelect
+                }
+            }
             return {
                 lang: 'en'
             }

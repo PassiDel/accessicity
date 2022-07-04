@@ -1,4 +1,4 @@
-import { defineNuxtConfig } from 'nuxt'
+import {defineNuxtConfig} from 'nuxt'
 import {IntlifyModuleOptions} from "@intlify/nuxt3";
 
 declare module '@nuxt/schema' {
@@ -12,7 +12,8 @@ export default defineNuxtConfig({
         '@nuxtjs/tailwindcss',
         '@nuxtjs/color-mode',
         '@pinia/nuxt',
-        '@intlify/nuxt3'
+        '@intlify/nuxt3',
+        'nuxt-schema-org'
     ],
     tailwindcss: {
         exposeConfig: true
@@ -27,6 +28,10 @@ export default defineNuxtConfig({
             fallbackLocale: 'en',
             availableLocales: ['en', 'de'],
         },
-    }
+    },
+    schemaOrg: {
+        canonicalHost: 'https://accessicity.syma.dev/',
+        defaultLanguage: 'en-US'
+    },
 
 })

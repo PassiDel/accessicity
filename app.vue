@@ -2,23 +2,58 @@
 import {useLangStore} from '~/store/lang';
 // noinspection TypeScriptCheckImport
 import {useI18n} from "vue-i18n";
-import {useColorMode, watch} from "#imports";
+import {defineOrganization, defineWebPage, useColorMode, useHead, useRoute, useSchemaOrg, watch} from "#imports";
 
 const colorMode = useColorMode()
 
-useHead({
-  bodyAttrs: {
-    class: 'bg-jelly-bean-50 dark:bg-jelly-bean-900 transition duration-500'
-  }
-})
-
 const langStore = useLangStore()
 const i18n = useI18n();
+i18n.locale.value = langStore.lang
+const langs = ['en', 'de']
+
+
+const route = useRoute()
+const appName = 'Accessicity';
+const logo = '/logo.png'
+const title = route.meta.title ? `${appName} - ${route.meta.title}` : appName
+const description = route.meta.description ? route.meta.description : appName
+const image = route.meta.image ? route.meta.image : logo
+
+useHead({
+  htmlAttrs: {
+    lang: i18n.locale
+  },
+  bodyAttrs: {
+    class: 'bg-jelly-bean-50 dark:bg-jelly-bean-900 transition duration-500'
+  },
+  title,
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+  charset: 'utf-8',
+  meta: [
+    {name: 'description', content: description},
+    {name: 'og:description', content: description},
+    {name: 'og:title', content: title},
+    {name: 'og:image', content: image},
+    {name: 'og:site_name', content: appName}
+  ],
+})
+
 
 watch(langStore, l => i18n.locale.value = l.lang)
 
-const langs = ['en', 'de']
 
+useSchemaOrg([
+  defineOrganization({
+    name: appName,
+    logo
+  }),
+  defineWebPage({
+    name: title,
+    description,
+    inLanguage: langs,
+    image
+  }),
+])
 </script>
 
 <template>
