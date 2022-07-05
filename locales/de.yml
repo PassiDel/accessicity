@@ -11,3 +11,10 @@ disability:
   wheelchair:
     name: Rollstuhl
     desc: Ist auf einen Rollstuhl angewiesen
+validations:
+  required: Dieses Feld ist erforderlich.
+  email: Der eingegebene Wert ist keine gültige E-Mail-Adresse.
+  minLength: Der eingegebene Wert sollte mindestens %{min} lang sein.
+input:
+  email: E-Mail
+  password: Passwort

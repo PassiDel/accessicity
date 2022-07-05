@@ -11,3 +11,10 @@ disability:
   wheelchair:
     name: Wheelchair
     desc: Has to use a wheelchair
+validations:
+  required: This field is required.
+  email: Value is not a valid email address.
+  minLength: Value should be at least %{min} characters long.
+input:
+  email: Email
+  password: Password
