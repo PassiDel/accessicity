@@ -12,7 +12,6 @@ definePageMeta({
 })
 
 const {pending, data: result, refresh} = await useFetchWithHeader('/api/user')
-console.log(pending)
 </script>
 
 <template>

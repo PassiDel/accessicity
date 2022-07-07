@@ -10,11 +10,6 @@ export const useFetchWithHeader = (url: string, opts?: UseFetchOptions<any>) => 
         headers['authorization'] = `Bearer ${auth.user.token}`
     }
 
-    console.log(process.server, url, {
-        ...opts,
-        headers
-    })
-
     return useFetch(url, {
         ...opts,
         headers
