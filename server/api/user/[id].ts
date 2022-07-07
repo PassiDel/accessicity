@@ -29,6 +29,40 @@ export default defineEventHandler(async (event) => {
                 orderBy: {
                     verified: 'desc'
                 }
+            },
+            comments: {
+                take: 5,
+                select: {
+                    id: true,
+                    createdAt: true,
+                    title: true,
+                    message: true,
+                    rating: true,
+                    city: {
+                        select: {
+                            id: true,
+                            name: true,
+                            slug: true
+                        }
+                    },
+                    disability: {
+                        select: {
+                            rating: true,
+                            disability: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    trans_name: true,
+                                    slug: true,
+                                    icon: true
+                                }
+                            }
+                        }
+                    }
+                },
+                orderBy: {
+                    createdAt: 'desc'
+                }
             }
         }})
 

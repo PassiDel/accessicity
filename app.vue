@@ -24,7 +24,7 @@ useHead({
     lang: i18n.locale
   },
   bodyAttrs: {
-    class: 'bg-jelly-bean-50 dark:bg-jelly-bean-900 transition duration-500'
+    class: 'bg-main dark:bg-primary transition duration-500'
   },
   title,
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
@@ -58,31 +58,64 @@ const auth = useAuthStore()
 </script>
 
 <template>
-  <h1 class="text-amber-500">{{ $t('other.test') }}</h1>
-  <h2 class="text-white">{{ $t('other.varr', {world: 'aa'}) }}</h2>
-  <select v-model="colorMode.preference"
-          class="p-1 rounded border
-            bg-mexican-red-50
-              hover:bg-mexican-red-200
-            dark:bg-mexican-red-800 dark:text-white dark:border-zinc-700
-              dark:hover:bg-mexican-red-600
-            transition duration-300 ease-out">
-    <option value="system">{{ $t('darkmode.system') }}</option>
-    <option value="light">{{ $t('darkmode.light') }}</option>
-    <option value="dark">{{ $t('darkmode.dark') }}</option>
-    <option value="sepia">{{ $t('darkmode.sepia') }}</option>
-  </select>
-  <select v-model="langStore.lang">
-    <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">
-      {{ lang }}
-    </option>
-  </select>
-  <button v-if="auth.user" class="dark:bg-white p-3 ml-3 rounded" @click.prevent="auth.logout()">Logout</button>
-  <NuxtLink is="button" v-else :to="{query: {r: route.path}, path: '/login'}" class="dark:bg-white p-3 ml-3 rounded">
-    Login
-  </NuxtLink>
+  <!--  <h1 class="text-amber-500">{{ $t('other.test') }}</h1>-->
+  <!--  <h2 class="text-white">{{ $t('other.varr', {world: 'aa'}) }}</h2>-->
+  <!--  <button v-if="auth.user" class="dark:bg-white p-3 ml-3 rounded" @click.prevent="auth.logout()">Logout</button>-->
+  <!--  <NuxtLink is="button" v-else :to="{query: {r: route.path}, path: '/login'}" class="dark:bg-white p-3 ml-3 rounded">-->
+  <!--    Login-->
+  <!--  </NuxtLink>-->
   <NuxtLayout>
-    <NuxtPage/>
+    <div class="flex flex-col h-screen">
+      <header
+          class="py-5 bg-light dark:bg-text md:flex overflow-hidden justify-between items-center border-light dark:border-text border-b-primary dark:border-b-primarydark border-2">
+        <div class="pl-5">
+          <NuxtLink to="/">
+            <div class="w-[180px] h-[90px] bg-black"/>
+          </NuxtLink>
+        </div>
+        <div class="pt-5 md:pt-0 flex flex-col md:flex-row">
+          <NuxtLink class="header-link" to="/explore">{{ $t('header.explore') }}</NuxtLink>
+          <NuxtLink class="header-link" to="/ranking">{{ $t('header.ranking') }}</NuxtLink>
+          <NuxtLink v-if="auth.user" class="header-link" to="/user">{{ auth.user.name }}</NuxtLink>
+          <a v-if="auth.user" class="header-link" href="#" @click.prevent="auth.logout()">{{ $t('header.logout') }}</a>
+          <NuxtLink v-else :to="{query: {r: route.path}, path: '/login'}" class="header-link">{{
+              $t('header.login')
+            }}
+          </NuxtLink>
+        </div>
+      </header>
+      <main class="flex-1 overflow-y-auto p-5">
+        <NuxtPage/>
+      </main>
+      <footer class="pb-5 pt-10 bg-primary text-center">
+        <select v-model="colorMode.preference"
+                class="p-1 rounded border
+                    bg-mexican-red-50
+                      hover:bg-mexican-red-200
+                    dark:bg-mexican-red-800 dark:text-white dark:border-zinc-700
+                      dark:hover:bg-mexican-red-600
+                    transition duration-300 ease-out">
+          <option value="system">{{ $t('darkmode.system') }}</option>
+          <option value="light">{{ $t('darkmode.light') }}</option>
+          <option value="dark">{{ $t('darkmode.dark') }}</option>
+          <option value="sepia">{{ $t('darkmode.sepia') }}</option>
+        </select>
+        <select v-model="langStore.lang">
+          <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">
+            {{ lang }}
+          </option>
+        </select>
+      </footer>
+    </div>
   </NuxtLayout>
 
 </template>
+<style>
+.header-link {
+  @apply w-32 text-center text-xl font-light text-text dark:text-light py-2.5 md:py-0 hover:font-normal
+}
+
+* {
+  @apply transition-colors duration-500
+}
+</style>

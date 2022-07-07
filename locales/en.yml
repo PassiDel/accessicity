@@ -18,3 +18,10 @@ validations:
 input:
   email: Email
   password: Password
+header:
+  explore: Explore
+  ranking: Ranking
+  logout: Logout
+  login: Login
+profile:
+  createdAt: "Account created: %{date}"
