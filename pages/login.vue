@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
-import {definePageMeta, defineWebPagePartial, ref, useFetch, useSchemaOrg} from "#imports";
+import {definePageMeta, defineWebPagePartial, navigateTo, ref, useFetch, useRoute, useSchemaOrg} from "#imports";
 import {useAuthStore} from "~/store/auth";
-import {useFetchWithHeader} from "~/composable/fetch";
 import useVuelidate from "@vuelidate/core";
-import {email as _email, minLength, required} from "~/utils/i18n-validators";
+import {email as _email, required} from "~/utils/i18n-validators";
 // noinspection TypeScriptCheckImport
 import {useI18n} from "vue-i18n";
 
@@ -12,7 +11,8 @@ definePageMeta({
   layout: 'auth',
   description: 'Login with an account',
   title: 'Login',
-  image: '/image.jpgggg'
+  image: '/image.jpgggg',
+  middleware: 'noauth'
 });
 useSchemaOrg([
   defineWebPagePartial({
@@ -20,6 +20,7 @@ useSchemaOrg([
   })
 ])
 
+const route = useRoute()
 const auth = useAuthStore()
 const email = ref('')
 const password = ref('')
@@ -32,36 +33,44 @@ const v$ = useVuelidate({
   },
   password: {
     required: required(i18n),
-    minLength: minLength(i18n, 8)
+    // minLength: minLength(i18n, 8)
   },
   accept: {
     required: required(i18n)
   }
 }, {email, password, accept})
 
+const loading = ref(false)
+const authError = ref<true | Error>(null)
 
 const submit = async () => {
+  loading.value = true
   const valid = await v$.value.$validate()
   if (!valid) {
-    // notify user form is invalid
-    alert('invalid')
     return
   }
 
-  console.log(email.value, password.value)
-  const {data: result} = await useFetch('/api/login', {
+  const {data: result, error} = await useFetch('/api/login', {
     method: 'POST',
     body: {
       email: email.value,
       password: password.value
     }
   })
-  console.log(result.value)
+  authError.value = error.value
+
+  if (error.value) {
+    v$.value.$reset()
+    return
+  }
 
   auth.login(result.value)
+  loading.value = false
 
-  const {data} = await useFetchWithHeader('/api/user')
-  console.log(data)
+  const redirect = route.query.r && (typeof route.query.r === 'string' ? route.query.r : route.query.r[0]) || '/'
+
+  navigateTo(redirect === '/login' ? '' : redirect)
+
 }
 </script>
 
@@ -75,10 +84,16 @@ const submit = async () => {
     <br>
     <InputField v-model:model="accept" :name="$t('input.password')" :v="v$.accept" type="checkbox"/>
     <br>
-    <button :class="{'cursor-pointer': !v$.$invalid, 'cursor-not-allowed': v$.$invalid}"
-            :disabled="v$.$invalid"
+    <span v-if="authError" class="flex items-center font-medium tracking-wide text-red-500 text-m mt-1 ml-1">
+			{{ authError.data.statusMessage }}
+		</span>
+    <button :class="{'cursor-pointer': !loading && !v$.$invalid, 'cursor-not-allowed': loading || v$.$invalid}"
+            :disabled="loading || v$.$invalid"
             class="p-3 dark:bg-white dark:disabled:bg-gray-500 rounded" @click.prevent="submit">submit
     </button>
+    <div v-if="loading" class="m-3">
+      <Spinner/>
+    </div>
   </div>
 </template>
 

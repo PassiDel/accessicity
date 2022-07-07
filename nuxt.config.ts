@@ -33,5 +33,5 @@ export default defineNuxtConfig({
         canonicalHost: 'https://accessicity.syma.dev/',
         defaultLanguage: 'en-US'
     },
-
+    pageTransition: {'page-fade': true},
 })

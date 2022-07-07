@@ -1,8 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {useLangStore} from '~/store/lang';
 // noinspection TypeScriptCheckImport
 import {useI18n} from "vue-i18n";
 import {defineOrganization, defineWebPage, useColorMode, useHead, useRoute, useSchemaOrg, watch} from "#imports";
+import {useAuthStore} from "~/store/auth";
 
 const colorMode = useColorMode()
 
@@ -18,7 +19,6 @@ const logo = '/logo.png'
 const title = route.meta.title ? `${appName} - ${route.meta.title}` : appName
 const description = route.meta.description ? route.meta.description : appName
 const image = route.meta.image ? route.meta.image : logo
-
 useHead({
   htmlAttrs: {
     lang: i18n.locale
@@ -54,11 +54,12 @@ useSchemaOrg([
     image
   }),
 ])
+const auth = useAuthStore()
 </script>
 
 <template>
   <h1 class="text-amber-500">{{ $t('other.test') }}</h1>
-  <h2 class="text-white">{{ $t('other.varr', {world:'aa'})}}</h2>
+  <h2 class="text-white">{{ $t('other.varr', {world: 'aa'}) }}</h2>
   <select v-model="colorMode.preference"
           class="p-1 rounded border
             bg-mexican-red-50
@@ -76,6 +77,10 @@ useSchemaOrg([
       {{ lang }}
     </option>
   </select>
+  <button v-if="auth.user" class="dark:bg-white p-3 ml-3 rounded" @click.prevent="auth.logout()">Logout</button>
+  <NuxtLink is="button" v-else :to="{query: {r: route.path}, path: '/login'}" class="dark:bg-white p-3 ml-3 rounded">
+    Login
+  </NuxtLink>
   <NuxtLayout>
     <NuxtPage/>
   </NuxtLayout>
