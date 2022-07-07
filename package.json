@@ -29,6 +29,7 @@
     "cookie": "^0.5.0",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
+    "material-icons": "^1.11.4",
     "pinia": "^2.0.14",
     "pinia-plugin-persistedstate-2": "^1.0.0"
   }

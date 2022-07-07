@@ -21,6 +21,8 @@ export default defineEventHandler(async (event) => {
                             id: true,
                             slug: true,
                             icon: true,
+                            trans_name: true,
+                            name: true,
                         }
                     }
                 },
