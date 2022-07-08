@@ -2,7 +2,7 @@
 import {ref, watch} from "#imports";
 import {Validation} from "@vuelidate/core";
 
-const {model, type, name, placeholder, v} = defineProps<{
+const {model, type, name, placeholder, v, icon} = defineProps<{
   model: String,
   type: String,
   name?: String,
@@ -32,20 +32,7 @@ watch(_model, mo => {
       <div class="absolute flex border border-transparent left-0 top-0 h-full w-10">
         <div
             class="flex items-center justify-center rounded-tl rounded-bl z-10 bg-gray-100 text-gray-600 text-lg h-full w-full">
-          <svg class="h-5 w-5"
-               fill="none"
-               height="24"
-               stroke="currentColor"
-               stroke-linecap="round"
-               stroke-linejoin="round"
-               stroke-width="2"
-               viewBox="0 0 24 24"
-               width="24">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12"
-                    cy="7"
-                    r="4"></circle>
-          </svg>
+          <span class="material-icons">{{ icon || 'edit' }}</span>
         </div>
       </div>
 
@@ -68,5 +55,6 @@ watch(_model, mo => {
 </template>
 
 <style scoped>
+@import 'material-icons/iconfont/filled.css';
 
 </style>

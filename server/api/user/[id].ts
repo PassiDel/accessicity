@@ -8,10 +8,13 @@ export default defineEventHandler(async (event) => {
         return sendError(event, createError({statusCode: 403, statusMessage: 'Forbidden'}))
 
 
-    const user = await prisma.user.findUnique({where: {id: parseInt(event.context.params.id)}, select: {
+    const id = parseInt(event.context.params.id);
+    const user = await prisma.user.findUnique({
+        where: {id}, select: {
             id: true,
             name: true,
             createdAt: true,
+            email: event.context.user && event.context.user.id === id,
             disabilitys: {
                 select: {
                     verified: true,

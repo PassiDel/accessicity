@@ -18,6 +18,7 @@ validations:
 input:
   email: Email
   password: Password
+  name: Display name
 header:
   explore: Explore
   ranking: Ranking

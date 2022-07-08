@@ -3,7 +3,7 @@
 import {definePageMeta, defineWebPagePartial, navigateTo, ref, useFetch, useRoute, useSchemaOrg} from "#imports";
 import {useAuthStore} from "~/store/auth";
 import useVuelidate from "@vuelidate/core";
-import {email as _email, required} from "~/utils/i18n-validators";
+import {email as _email, minLength, required} from "~/utils/i18n-validators";
 // noinspection TypeScriptCheckImport
 import {useI18n} from "vue-i18n";
 
@@ -33,7 +33,7 @@ const v$ = useVuelidate({
   },
   password: {
     required: required(i18n),
-    // minLength: minLength(i18n, 8)
+    minLength: minLength(i18n, 8)
   },
   accept: {
     required: required(i18n)
@@ -78,18 +78,18 @@ const submit = async () => {
   <div>
     <h1>test</h1>
     <h2 v-if="auth.user" class="dark:text-white">Logged in</h2>
-    <InputField v-model:model="email" :name="$t('input.email')" :v="v$.email" type="email"/>
+    <InputField v-model:model="email" :name="$t('input.email')" :v="v$.email" icon="alternate_email" type="email"/>
     <br>
-    <InputField v-model:model="password" :name="$t('input.password')" :v="v$.password" type="password"/>
+    <InputField v-model:model="password" :name="$t('input.password')" :v="v$.password" icon="key" type="password"/>
     <br>
     <InputField v-model:model="accept" :name="$t('input.password')" :v="v$.accept" type="checkbox"/>
     <br>
     <span v-if="authError" class="flex items-center font-medium tracking-wide text-red-500 text-m mt-1 ml-1">
 			{{ authError.data.statusMessage }}
 		</span>
-    <button :class="{'cursor-pointer': !loading && !v$.$invalid, 'cursor-not-allowed': loading || v$.$invalid}"
-            :disabled="loading || v$.$invalid"
-            class="p-3 dark:bg-white dark:disabled:bg-gray-500 rounded" @click.prevent="submit">submit
+    <button :disabled="loading || v$.$invalid"
+            class="p-3 dark:bg-white dark:disabled:bg-gray-500 rounded cursor-pointer disabled:cursor-not-allowed "
+            @click.prevent="submit">submit
     </button>
     <div v-if="loading" class="m-3">
       <Spinner/>
