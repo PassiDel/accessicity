@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set the value
+      id: step_one
+      run: |
+        echo "git_tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        context: '.'
+        push: true
+        tags: ghcr.io/passidel/accessicity:${{ github.sha }}, ghcr.io/passidel/accessicity:${{ git_tag }}, ghcr.io/passidel/accessicity:latest
