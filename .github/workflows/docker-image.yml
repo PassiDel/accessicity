@@ -23,4 +23,4 @@ jobs:
       with:
         context: '.'
         push: true
-        tags: ghcr.io/passidel/accessicity:${{ github.sha }}, ghcr.io/passidel/accessicity:${{ git_tag }}, ghcr.io/passidel/accessicity:latest
+        tags: ghcr.io/passidel/accessicity:${{ github.sha }}, ghcr.io/passidel/accessicity:${{ env.git_tag }}, ghcr.io/passidel/accessicity:latest
