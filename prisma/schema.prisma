@@ -36,8 +36,11 @@ model City {
   slug     String    @unique
   loc_lat  Decimal   @db.Decimal(8, 6)
   loc_lon  Decimal   @db.Decimal(9, 6)
+  north    Decimal?  @db.Decimal(8, 6)
+  south    Decimal?  @db.Decimal(8, 6)
+  east     Decimal?  @db.Decimal(9, 6)
+  west     Decimal?  @db.Decimal(9, 6)
   outline  Json?
-  loc_zoom Int       @db.TinyInt()
   comments Comment[]
   ranking  Ranking[]
 }

@@ -16,7 +16,10 @@ export default defineEventHandler(async (event) => {
             loc_lat: true,
             loc_lon: true,
             outline: true,
-            loc_zoom: true,
+            north: true,
+            east: true,
+            south: true,
+            west: true,
             ranking: {
                 select: {
                     value: true,
