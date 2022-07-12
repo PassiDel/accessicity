@@ -64,6 +64,7 @@ const save = async () => {
     return console.log(postError.value)
 
   await refresh()
+  auth.user.name = data.value.user.name
   editMode.value = false
 }
 </script>
