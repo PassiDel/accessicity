@@ -8,20 +8,21 @@ export default defineEventHandler(async (event) => {
         return sendError(event, createError({statusCode: 403, statusMessage: 'Forbidden'}))
 
     // calculate overall ratings
-    // const cityRating = (await prisma.comment.groupBy({
-    //     by: ['cityId'],
-    //     _count: {
-    //         _all: true
-    //     },
-    //     _sum: {
-    //         rating: true
-    //     }
-    // })).map(c => {
-    //     return {
-    //         id: c.cityId,
-    //         rating: c._sum.rating / c._count._all
-    //     }
-    // });
+    const cityOverallRating = (await prisma.comment.groupBy({
+        by: ['cityId'],
+        _count: {
+            _all: true
+        },
+        _sum: {
+            rating: true
+        }
+    })).map(c => {
+        return {
+            cityId: c.cityId,
+            value: c._sum.rating / c._count._all
+        }
+    });
+
     const cityRating = (await prisma.commentDisablilty.findMany({
         select: {
             comment: {
@@ -84,6 +85,10 @@ export default defineEventHandler(async (event) => {
         // prisma.$queryRaw`ALTER TABLE Ranking AUTO_INCREMENT = 1`,
         prisma.ranking.createMany({
             data: creates
+        }),
+        prisma.overallRanking.deleteMany(),
+        prisma.overallRanking.createMany({
+            data: cityOverallRating
         })
     ])
 })
