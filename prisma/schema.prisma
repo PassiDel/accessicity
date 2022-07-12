@@ -19,9 +19,9 @@ model User {
 }
 
 model UserDisability {
-  user         User       @relation(fields: [userId], references: [id])
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int
-  disability   Disability @relation(fields: [disabilityId], references: [id])
+  disability   Disability @relation(fields: [disabilityId], references: [id], onDelete: Cascade)
   disabilityId Int
   createdAt    DateTime   @default(now())
   verified     Boolean    @default(false)
@@ -31,15 +31,19 @@ model UserDisability {
 
 // Source https://opendata-esri-de.opendata.arcgis.com/datasets/esri-de-content::vg250-gemeindegrenzen/about
 model City {
-  id       Int       @id @default(autoincrement())
-  name     String
-  slug     String    @unique
-  loc_lat  Decimal   @db.Decimal(8, 6)
-  loc_lon  Decimal   @db.Decimal(9, 6)
-  outline  Json?
-  loc_zoom Int       @db.TinyInt()
-  comments Comment[]
-  ranking  Ranking[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  slug           String           @unique
+  loc_lat        Decimal          @db.Decimal(8, 6)
+  loc_lon        Decimal          @db.Decimal(9, 6)
+  north          Decimal?         @db.Decimal(8, 6)
+  south          Decimal?         @db.Decimal(8, 6)
+  east           Decimal?         @db.Decimal(9, 6)
+  west           Decimal?         @db.Decimal(9, 6)
+  outline        Json?
+  comments       Comment[]
+  ranking        Ranking[]
+  overallRanking OverallRanking[]
 }
 
 model Comment {
@@ -49,17 +53,17 @@ model Comment {
   title      String              @db.VarChar(255)
   message    String              @db.Text
   rating     Int                 @default(0) @db.TinyInt()
-  author     User                @relation(fields: [authorId], references: [id])
+  author     User                @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId   Int
-  city       City                @relation(fields: [cityId], references: [id])
+  city       City                @relation(fields: [cityId], references: [id], onDelete: Cascade)
   cityId     Int
   disability CommentDisablilty[]
 }
 
 model CommentDisablilty {
-  disability   Disability @relation(fields: [disabilityId], references: [id])
+  disability   Disability @relation(fields: [disabilityId], references: [id], onDelete: Cascade)
   disabilityId Int
-  comment      Comment    @relation(fields: [commentId], references: [id])
+  comment      Comment    @relation(fields: [commentId], references: [id], onDelete: Cascade)
   commentId    Int
   rating       Int        @default(0) @db.TinyInt()
 
@@ -79,13 +83,19 @@ model Disability {
 }
 
 model Ranking {
-  city         City       @relation(fields: [cityId], references: [id])
+  city         City       @relation(fields: [cityId], references: [id], onDelete: Cascade)
   cityId       Int
-  disability   Disability @relation(fields: [disabilityId], references: [id])
+  disability   Disability @relation(fields: [disabilityId], references: [id], onDelete: Cascade)
   disabilityId Int
   value        Decimal    @db.Decimal(6, 5)
 
   @@unique([cityId, disabilityId])
+}
+
+model OverallRanking {
+  city   City    @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  cityId Int     @unique
+  value  Decimal @db.Decimal(6, 5)
 }
 
 enum Role {

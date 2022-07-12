@@ -11,3 +11,33 @@ disability:
   wheelchair:
     name: Wheelchair
     desc: Has to use a wheelchair
+  blind:
+    name: Blind
+    desc: TODO
+  walking:
+    name: Assisted Walker
+    desc: TODO
+  deaf:
+    name: Deaf
+    desc: TODO
+  adhd:
+    name: Attention Deficit Hyperactivity Disorder
+    desc: TODO
+  autism:
+    name: Autism Spectrum
+    desc: TODO
+validations:
+  required: This field is required.
+  email: Value is not a valid email address.
+  minLength: Value should be at least %{min} characters long.
+input:
+  email: Email
+  password: Password
+  name: Display name
+header:
+  explore: Explore
+  ranking: Ranking
+  logout: Logout
+  login: Login
+profile:
+  createdAt: "Account created: %{date}"

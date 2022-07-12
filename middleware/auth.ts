@@ -1,8 +1,9 @@
-import {abortNavigation, defineNuxtRouteMiddleware, navigateTo} from "#imports";
+import {defineNuxtRouteMiddleware, navigateTo} from "#imports";
+import {useAuthStore} from "~/store/auth";
 
-export default defineNuxtRouteMiddleware((to, from) => {
-    if (to.params.id === '1') {
-        return abortNavigation()
+const auth = useAuthStore()
+export default defineNuxtRouteMiddleware((to) => {
+    if (!auth.user) {
+        return navigateTo({path: '/login', query: {r: to.path}}, {redirectCode: 302})
     }
-    return navigateTo('/login')
 })

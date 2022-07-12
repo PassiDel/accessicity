@@ -11,6 +11,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'main': '#F5F5F5',
+        'light': '#FEFEFE',
+        'primary': '#006888',
+        'primarydark': '#004255',
+        'text': '#121110',
+        'text-light': '#636256',
         'jelly-bean': {
           DEFAULT: '#2A959F',
           '50': '#F7FDFD',
