@@ -38,6 +38,34 @@ rl.on('line', line => {
 
     console.log(data.length)
 
+    // TODO: add descriptions
+    const disabilities = [
+        {name: 'Blind', trans_name: 'disability.blind', slug: 'blind', description: '', icon: 'blind'},
+        {
+            name: 'Wheelchair',
+            trans_name: 'disability.wheelchair',
+            slug: 'wheelchair',
+            description: '',
+            icon: 'accessible'
+        },
+        {
+            name: 'Assisted Walker',
+            trans_name: 'disability.walking',
+            slug: 'assisted-walker',
+            description: '',
+            icon: 'assist_walker'
+        },
+        {name: 'Deaf', trans_name: 'disability.deaf', slug: 'deaf', description: '', icon: 'hearing'},
+        {
+            name: 'Attention Deficit Hyperactivity Disorder',
+            trans_name: 'disability.adhd',
+            slug: 'adhd',
+            description: '',
+            icon: 'psychology'
+        },
+        {name: 'Autism Spectrum', trans_name: 'disability.autism', slug: 'autism', description: '', icon: 'extension'},
+    ]
+
     async function main() {
         const result = await prisma.$transaction([
             prisma.city.deleteMany({}),
@@ -46,7 +74,11 @@ rl.on('line', line => {
             prisma.city.createMany({
                 data,
                 skipDuplicates: true
-            })
+            }),
+            prisma.disability.deleteMany({}),
+            prisma.$queryRaw`ALTER TABLE Disability
+                AUTO_INCREMENT = 1`,
+            prisma.disability.createMany({data: disabilities})
         ])
 
         console.log(result)

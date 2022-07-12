@@ -11,6 +11,21 @@ disability:
   wheelchair:
     name: Rollstuhl
     desc: Ist auf einen Rollstuhl angewiesen
+  blind:
+    name: Blind
+    desc: TODO
+  walking:
+    name: Rollator
+    desc: TODO
+  deaf:
+    name: Taub
+    desc: TODO
+  adhd:
+    name: Aufmerksamkeits-Defizit-Hyperaktivitäts-Störung
+    desc: TODO
+  autism:
+    name: Autismus Spektrum
+    desc: TODO
 validations:
   required: Dieses Feld ist erforderlich.
   email: Der eingegebene Wert ist keine gültige E-Mail-Adresse.
