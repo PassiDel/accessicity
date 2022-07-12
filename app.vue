@@ -71,7 +71,7 @@ const shown = ref(false)
           class="py-5 bg-light dark:bg-text md:flex overflow-hidden justify-between items-center border-light dark:border-text border-b-primary dark:border-b-primarydark border-2">
         <div class="pl-5 flex justify-between">
           <NuxtLink to="/">
-            <div class="w-[180px] h-[90px] bg-black"/>
+            <Logo class="w-[180px] h-[90px]"/>
           </NuxtLink>
           <div class="text-right md:hidden my-auto p-5 mr-5" @click.prevent="shown = !shown"><span
               class="material-icons-outlined" style="font-size: 48px">menu</span></div>
