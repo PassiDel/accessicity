@@ -55,6 +55,7 @@ useSchemaOrg([
   }),
 ])
 const auth = useAuthStore()
+const shown = ref(false)
 </script>
 
 <template>
@@ -68,12 +69,14 @@ const auth = useAuthStore()
     <div class="flex flex-col h-screen">
       <header
           class="py-5 bg-light dark:bg-text md:flex overflow-hidden justify-between items-center border-light dark:border-text border-b-primary dark:border-b-primarydark border-2">
-        <div class="pl-5">
+        <div class="pl-5 flex justify-between">
           <NuxtLink to="/">
             <div class="w-[180px] h-[90px] bg-black"/>
           </NuxtLink>
+          <div class="text-right md:hidden my-auto p-5 mr-5" @click.prevent="shown = !shown"><span
+              class="material-icons-outlined" style="font-size: 48px">menu</span></div>
         </div>
-        <div class="pt-5 md:pt-0 flex flex-col md:flex-row">
+        <div :class="{hidden: !shown}" class="pt-5 md:pt-0 flex-col md:flex-row flex md:flex">
           <NuxtLink class="header-link" to="/explore">{{ $t('header.explore') }}</NuxtLink>
           <NuxtLink class="header-link" to="/ranking">{{ $t('header.ranking') }}</NuxtLink>
           <NuxtLink v-if="auth.user" class="header-link" to="/user">{{ auth.user.name }}</NuxtLink>
@@ -111,6 +114,7 @@ const auth = useAuthStore()
 
 </template>
 <style>
+@import 'material-icons/iconfont/outlined.css';
 .header-link {
   @apply w-32 text-center text-xl font-light text-text dark:text-light py-2.5 md:py-0 hover:font-normal
 }
