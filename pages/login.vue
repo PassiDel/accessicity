@@ -77,8 +77,8 @@ const submit = async () => {
 </script>
 
 <template>
-  <div class="mx-auto w-full sm:w-96 text-center">
-    <h1 class="text-5xl font-light my-10 text-primary">{{ $t('login.title') }}</h1>
+  <div class="mx-auto p-16 pt-[0] shadow-xl rounded w-full sm:w-[36rem] text-center">
+    <h1 class="text-5xl font-light my-10 text-primary dark:text-white">{{ $t('login.title') }}</h1>
     <InputField v-model:model="email" :name="$t('input.email')" :v="v$.email" type="email"/>
     <InputField v-model:model="password" :name="$t('input.password')" :v="v$.password" type="password"/>
 
@@ -88,8 +88,8 @@ const submit = async () => {
     <div class="w-full flex space-x-5">
       <button :disabled="loading || v$.$invalid"
               class="p-3 w-auto flex-grow
-            bg-yellow-400 disabled:bg-yellow-600
-            dark:bg-white dark:disabled:bg-gray-500
+            bg-button disabled:bg-yellow-600
+            dark:bg-buttondark dark:disabled:bg-gray-500
             text-primary
             font-bold
             rounded cursor-pointer disabled:cursor-not-allowed "
@@ -99,9 +99,11 @@ const submit = async () => {
         <Spinner/>
       </div>
     </div>
-    <p class="mt-10">
-      <NuxtLink :to="{query: {r: redirect}, path: '/register'}">{{ $t('login.no_account') }}<span
-          class="duration-300 ease-out hover:text-primary font-bold underline">{{ $t('login.register_now') }}</span>
+    <p class="mt-10 dark:text-white">
+      <NuxtLink :to="{query: {r: redirect}, path: '/register'}">{{ $t('login.no_account') }} <span
+          class="duration-300 ease-out hover:text-primary dark:hover:text-primarydark font-bold underline">{{
+          $t('login.register_now')
+        }}</span>
       </NuxtLink>
     </p>
   </div>

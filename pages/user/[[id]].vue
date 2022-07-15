@@ -74,7 +74,7 @@ const save = async () => {
 <template>
   <div v-if="!error" class="xl:px-48 flex flex-col xl:flex-row space-y-10 xl:space-y-0 xl:space-x-10">
     <div class="w-64 xl:mr-32 mr-0 shrink-0">
-      <div v-if="!editMode" class="p-5 border-2 text-center space-y-2">
+      <div v-if="!editMode" class="p-5 border-2 text-center space-y-2 bg-gray-100 dark:bg-primarydark dark:text-white">
         <h2 class="text-lg font-bold">{{ data.user.name }}</h2>
         <h3 v-if="isUser" class="text-lg">{{ data.user.email }}</h3>
         <h3 class="text-md font-light">{{ $t('profile.createdAt', {date: $d(data.user.createdAt)}) }}</h3>
@@ -86,7 +86,7 @@ const save = async () => {
           </button>
         </div>
       </div>
-      <div v-else class="p-5 border-2 text-center">
+      <div v-else class="p-5 border-2 text-center bg-gray-100 dark:bg-primary dark:text-white">
         <InputField v-model:model="editData.name" :name="$t('input.name')" :v="v$.editData.name" type="text"/>
         <InputField v-model:model="editData.password" :name="$t('input.password')" :v="v$.editData.password"
                     type="password"/>

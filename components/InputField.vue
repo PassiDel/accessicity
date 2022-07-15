@@ -21,19 +21,19 @@ watch(_model, mo => {
 <template>
   <div class="h-[50px] my-8">
     <div
-        :class="{'focus-within:border-red-500': v?.$errors.length > 0}"
-        class="field w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+        :class="{'border-red-500': v?.$errors.length > 0}"
+        class="field w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary dark:focus-within:border-primarydark"
     >
       <input
           v-model="_model"
           :name="v?.$path ?? name"
           :type="type"
-          class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+          class="w-full border-none bg-transparent dark:text-white outline-none placeholder:italic focus:outline-none"
           placeholder=" "
           @blur="v?.$touch()"
       />
       <label :for="v?.$path ?? name"
-             class="z-[-1] absolute left-0 font-light origin-top-left transition-transform duration-300">{{
+             class="z-[-1] absolute left-0 font-light origin-top-left dark:text-white transition-transform duration-300">{{
           placeholder ?? name ?? ''
         }}</label>
 

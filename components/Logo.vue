@@ -95,7 +95,7 @@
 }
 
 .cls-3 {
-  @apply dark:fill-primary
+  @apply dark:fill-white
 }
 
 .cls-4 {

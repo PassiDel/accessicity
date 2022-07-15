@@ -48,12 +48,13 @@ watch(selected, (l, old) => {
     <div class="bg-amber-100 xl:-mx-[9.25rem] -mx-5 -mt-5 mb-5 p-10">
       <h1 class="text-primary font-bold text-4xl">{{ $t('index.title') }}</h1>
       <h2 class="text-text font-medium text-xl mt-5">{{ $t('index.subtitle') }}</h2>
+<!-- TODO: add search -->
       <input :placeholder="$t('search')" class="mt-5 text-center p-2"/>
     </div>
-    <h2 class="font-bold text-3xl">{{ $t('index.top5') }}</h2>
+    <h2 class="font-bold text-3xl dark:text-white">{{ $t('index.top5') }}</h2>
     <div
         class="flex flex-col xl:flex-row items-center xl:items-start justify-between space-y-5 xl:space-y-0 xl:space-x-5 mt-5">
-      <div v-for="(city, i) in result" :class="{'bg-green-500': selected === i}"
+      <div v-for="(city, i) in result" :class="{'bg-gray-500 dark:bg-primarydark': selected === i}"
            class="border border-text w-48 flex-inline"
            @click.stop="selected = i"
       >
@@ -69,7 +70,7 @@ watch(selected, (l, old) => {
             />
           </l-map>
         </div>
-        <h3 class="font-bold mt-2 h-auto flex-grow h-[3.5rem]">{{ city.city.name }}</h3>
+        <h3 class="font-bold mt-2 h-auto flex-grow h-[3.5rem] dark:text-white">{{ city.city.name }}</h3>
         <p class="place-items-center my-2">
           <DisabilityTag :name="$t('icon.accessibility')" :verified="true"
                          class="ml-1 mr-1"
