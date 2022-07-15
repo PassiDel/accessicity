@@ -88,6 +88,9 @@ watch(selected, (l, old) => {
         ></l-geo-json>
       </l-map>
     </div>
+    <div v-if="selected > -1">
+      <CommentList :city="result[selected].city" :comments="result[selected].city.comments" class="space-y-2.5"/>
+    </div>
   </div>
 </template>
 

@@ -23,7 +23,58 @@ export default defineEventHandler(async () => {
                     north: true,
                     east: true,
                     south: true,
-                    west: true
+                    west: true,
+                    comments: {
+                        take: 5,
+                        orderBy: {
+                            createdAt: 'desc'
+                        },
+                        where: {
+                            public: true
+                        },
+                        select: {
+                            id: true,
+                            createdAt: true,
+                            title: true,
+                            message: true,
+                            rating: true,
+                            author: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    createdAt: true,
+                                    disabilitys: {
+                                        select: {
+                                            verified: true,
+                                            createdAt: true,
+                                            disability: {
+                                                select: {
+                                                    id: true,
+                                                    slug: true,
+                                                    icon: true,
+                                                }
+                                            }
+                                        },
+                                        orderBy: {
+                                            verified: 'desc'
+                                        }
+                                    }
+                                }
+                            },
+                            disability: {
+                                select: {
+                                    rating: true,
+                                    disability: {
+                                        select: {
+                                            id: true,
+                                            slug: true,
+                                            icon: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
