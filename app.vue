@@ -62,21 +62,15 @@ const shown = ref(false)
 </script>
 
 <template>
-  <!--  <h1 class="text-amber-500">{{ $t('other.test') }}</h1>-->
-  <!--  <h2 class="text-white">{{ $t('other.varr', {world: 'aa'}) }}</h2>-->
-  <!--  <button v-if="auth.user" class="dark:bg-white p-3 ml-3 rounded" @click.prevent="auth.logout()">Logout</button>-->
-  <!--  <NuxtLink is="button" v-else :to="{query: {r: route.path}, path: '/login'}" class="dark:bg-white p-3 ml-3 rounded">-->
-  <!--    Login-->
-  <!--  </NuxtLink>-->
   <NuxtLayout>
     <div class="flex flex-col h-screen">
       <header
-          class="py-5 bg-light dark:bg-text md:flex overflow-hidden justify-between items-center border-light dark:border-text border-b-primary dark:border-b-primarydark border-2">
+          class="bg-light dark:bg-text md:flex overflow-hidden justify-between items-center border-light dark:border-text border-b-primary dark:border-b-primarydark border-2">
         <div class="pl-5 flex justify-between">
           <NuxtLink to="/">
             <Logo class="w-[180px] h-[90px]"/>
           </NuxtLink>
-          <div class="text-right md:hidden my-auto p-5 mr-5" @click.prevent="shown = !shown"><span
+          <div class="text-right md:hidden my-auto p-5 mr-5 cursor-pointer" @click.prevent="shown = !shown"><span
               class="material-icons-outlined" style="font-size: 48px">menu</span></div>
         </div>
         <div :class="{hidden: !shown}" class="pt-5 md:pt-0 flex-col md:flex-row flex md:flex">

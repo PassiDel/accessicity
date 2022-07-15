@@ -4,7 +4,7 @@ import {PrismaClient} from "@prisma/client";
 const prisma = new PrismaClient()
 
 interface UpdateDisabilityPayload {
-    disability: [number]
+    disability: number[]
 }
 
 export default defineEventHandler(async (event) => {

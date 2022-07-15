@@ -3,7 +3,7 @@ import {navigateTo, ref, useRoute} from "#imports";
 import {useAuthStore} from "~/store/auth";
 import {useFetchWithHeader} from "~/composable/fetch";
 import useVuelidate from "@vuelidate/core";
-import {minLength, required} from "~/utils/i18n-validators";
+import {maxLength, minLength, required} from "~/utils/i18n-validators";
 // noinspection TypeScriptCheckImport
 import {useI18n} from "vue-i18n";
 import CommentList from "~/components/CommentList.vue";
@@ -31,7 +31,8 @@ const i18n = useI18n()
 const v$ = useVuelidate({
   editData: {
     name: {
-      required: required(i18n)
+      required: required(i18n),
+      maxLength: maxLength(i18n, 190),
     },
     password: {
       required: required(i18n),
@@ -81,24 +82,23 @@ const save = async () => {
           <DisabilityTag v-for="d in data.user.disabilitys" :icon="d.disability.icon" :name="d.disability.name"
                          :trans_name="d.disability.trans_name" :verified="d.verified" class="m-1"/>
           <button v-if="isUser" class="p-2 px-3 rounded bg-primary hover:bg-primarydark text-light"
-                  @click.prevent="openEditMode()">Edit
+                  @click.prevent="openEditMode()">{{ $t('profile.edit') }}
           </button>
         </div>
       </div>
-      <div v-else class="p-5 border-2 text-center space-y-2">
-        <InputField v-model:model="editData.name" :name="$t('input.name')" :v="v$.editData.name" icon="badge"
-                    type="text"/>
-        <InputField v-model:model="editData.password" :name="$t('input.password')" :v="v$.editData.password" icon="key"
+      <div v-else class="p-5 border-2 text-center">
+        <InputField v-model:model="editData.name" :name="$t('input.name')" :v="v$.editData.name" type="text"/>
+        <InputField v-model:model="editData.password" :name="$t('input.password')" :v="v$.editData.password"
                     type="password"/>
         <div>
           <DisabilityTag v-for="d in data.user.disabilitys" :icon="d.disability.icon" :name="d.disability.name"
                          :trans_name="d.disability.trans_name" :verified="d.verified" class="ml-1 mr-1"/>
           <button :disabled="v$.$invalid"
                   class="p-2 px-3 rounded bg-green-500 hover:bg-green-600 disabled:bg-green-800 cursor-pointer disabled:cursor-not-allowed text-light"
-                  @click.prevent="save()">Save
+                  @click.prevent="save()">{{ $t('profile.save') }}
           </button>
           <button class="p-2 px-3 ml-3 rounded bg-gray-500 hover:bg-gray-600 text-light"
-                  @click.prevent="editMode = false">Cancel
+                  @click.prevent="editMode = false">{{ $t('profile.cancel') }}
           </button>
         </div>
       </div>

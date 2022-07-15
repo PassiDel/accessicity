@@ -30,6 +30,8 @@ validations:
   required: This field is required.
   email: Value is not a valid email address.
   minLength: Value should be at least %{min} characters long.
+  checked: This field needs to be checked.
+  error: An error occurred.
 input:
   email: Email
   password: Password
@@ -41,3 +43,26 @@ header:
   login: Login
 profile:
   createdAt: "Account created: %{date}"
+  edit: Edit
+  save: Save
+  cancel: Cancel
+map:
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+index:
+  title: Haven't found a perfect city to travel to?
+  subtitle: Find your dream destination here!
+  top5: Top 5
+search: Search
+icon:
+  accessibility: Accessibility
+register:
+  title: Welcome to accessicity!
+  accept_terms: Accept terms
+  button: Register now
+  account: Already registered?
+  login: Login now!
+login:
+  title: Welcome back!
+  button: Login
+  no_account: No account yet?
+  register_now: Register now!

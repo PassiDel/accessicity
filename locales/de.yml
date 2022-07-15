@@ -30,6 +30,8 @@ validations:
   required: Dieses Feld ist erforderlich.
   email: Der eingegebene Wert ist keine gültige E-Mail-Adresse.
   minLength: Der eingegebene Wert sollte mindestens %{min} lang sein.
+  checked: Dieses Feld muss angekreuzt werden.
+  error: Ein Fehler ist aufgetreten.
 input:
   email: E-Mail
   password: Passwort
@@ -41,3 +43,26 @@ header:
   login: Anmelden
 profile:
   createdAt: "Account erstellt am: %{date}"
+  edit: Bearbeiten
+  save: Speichern
+  cancel: Abbrechen
+map:
+  attribution: 'Kartendaten &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> Mitwirkende'
+index:
+  title: Noch keinen passenden Ort für deine Reise gefunden?
+  subtitle: Finde hier dein perfektes Reiseziel!
+  top5: Top 5
+search: Suche
+icon:
+  accessibility: Barrierefreiheit
+register:
+  title: Willkommen bei accessicity!
+  accept_terms: AGB akzeptieren
+  button: Jetzt registrieren
+  account: Schon angemeldet?
+  login: Jetzt anmelden!
+login:
+  title: Willkommen zurück!
+  button: Anmelden
+  no_account: Noch keinen Account?
+  register_now: Jetzt registrieren!
