@@ -13,10 +13,13 @@ module.exports = {
       colors: {
         'main': '#F5F5F5',
         'light': '#FEFEFE',
-        'primary': '#006888',
-        'primarydark': '#004255',
+        'primary': '#004643',
+        'primarylight': '#abd1c6',
+        'primarydark': '#001e1d',
         'text': '#121110',
         'text-light': '#636256',
+        'button': '#faae2b',
+        'buttondark': '#f9bc60',
         'jelly-bean': {
           DEFAULT: '#2A959F',
           '50': '#F7FDFD',

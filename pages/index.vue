@@ -1,16 +1,18 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {definePageMeta, ref, watch} from "#imports";
 import {useFetchWithHeader} from "~/composable/fetch";
 import "leaflet/dist/leaflet.css"
 import {LGeoJson, LMap, LMarker, LTileLayer} from '@vue-leaflet/vue-leaflet';
+// noinspection TypeScriptCheckImport
+import {useI18n} from "vue-i18n";
 
 definePageMeta({
   title: 'Index'
 })
 
-
 const url = ref('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-const attribution = ref('Kartendaten &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> Mitwirkende')
+const i18n = useI18n();
+const attribution = i18n.t('map.attribution')
 
 const ready = ref(false)
 const map = ref(null)
@@ -38,20 +40,21 @@ watch(selected, (l, old) => {
   }
   map.value.leafletObject.flyTo(center, zoom, {animate: true, duration: 1})
 })
-// TODO: i18n
+
 </script>
 
 <template>
   <div class="text-center xl:mx-32" @click.stop="selected = -1">
     <div class="bg-amber-100 xl:-mx-[9.25rem] -mx-5 -mt-5 mb-5 p-10">
-      <h1 class="text-primary font-bold text-4xl">Noch keinen passenden Ort für deine Reise gefunden?</h1>
-      <h2 class="text-text font-medium text-xl mt-5">Finde hier dein perfektes Reiseziel!</h2>
-      <input class="mt-5 text-center p-2" placeholder="Suche"/>
+      <h1 class="text-primary font-bold text-4xl">{{ $t('index.title') }}</h1>
+      <h2 class="text-text font-medium text-xl mt-5">{{ $t('index.subtitle') }}</h2>
+<!-- TODO: add search -->
+      <input :placeholder="$t('search')" class="mt-5 text-center p-2"/>
     </div>
-    <h2 class="font-bold text-3xl">Top 5</h2>
+    <h2 class="font-bold text-3xl dark:text-white">{{ $t('index.top5') }}</h2>
     <div
         class="flex flex-col xl:flex-row items-center xl:items-start justify-between space-y-5 xl:space-y-0 xl:space-x-5 mt-5">
-      <div v-for="(city, i) in result" :class="{'bg-green-500': selected === i}"
+      <div v-for="(city, i) in result" :class="{'bg-gray-500 dark:bg-primarydark': selected === i}"
            class="border border-text w-48 flex-inline"
            @click.stop="selected = i"
       >
@@ -67,11 +70,11 @@ watch(selected, (l, old) => {
             />
           </l-map>
         </div>
-        <h3 class="font-bold mt-2 h-auto flex-grow h-[3.5rem]">{{ city.city.name }}</h3>
+        <h3 class="font-bold mt-2 h-auto flex-grow h-[3.5rem] dark:text-white">{{ city.city.name }}</h3>
         <p class="place-items-center my-2">
-          <DisabilityTag :verified="true" class="ml-1 mr-1"
-                         icon="accessibility"
-                         name="Accessibility"/>
+          <DisabilityTag :name="$t('icon.accessibility')" :verified="true"
+                         class="ml-1 mr-1"
+                         icon="accessibility"/>
           <Stars :value="parseInt(city.value)"/>
         </p>
       </div>
@@ -87,6 +90,9 @@ watch(selected, (l, old) => {
             :geojson="{type: 'FeatureCollection', features: [result[selected].city.outline]}"
         ></l-geo-json>
       </l-map>
+    </div>
+    <div v-if="selected > -1">
+      <CommentList :city="result[selected].city" :comments="result[selected].city.comments" class="space-y-2.5"/>
     </div>
   </div>
 </template>

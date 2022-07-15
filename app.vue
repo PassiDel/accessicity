@@ -2,18 +2,33 @@
 import {useLangStore} from '~/store/lang';
 // noinspection TypeScriptCheckImport
 import {useI18n} from "vue-i18n";
-import {defineOrganization, defineWebPage, useColorMode, useHead, useRoute, useSchemaOrg, watch} from "#imports";
+import {defineOrganization, defineWebPage, ref, useColorMode, useHead, useRoute, useSchemaOrg, watch} from "#imports";
 import {useAuthStore} from "~/store/auth";
 import 'material-icons/iconfont/outlined.css'
 import 'material-icons/iconfont/filled.css'
 import '@fontsource/roboto'
+import {storeToRefs} from "pinia";
 
 const colorMode = useColorMode()
 
-const langStore = useLangStore()
+const {lang} = storeToRefs(useLangStore())
+
 const i18n = useI18n();
-i18n.locale.value = langStore.lang
+i18n.locale.value = lang.value
 const langs = ['en', 'de']
+const langBtn = () => {
+  lang.value = langs.filter(l => l !== lang.value)[0]
+}
+
+const colors = [{key: 'dark', icon: 'dark_mode'}, {key: 'light', icon: 'light_mode'}, {
+  key: 'system',
+  icon: 'devices'
+}, {key: 'sepia', icon: 'coffee'}]
+const currIndex = ref(colors.findIndex(c => c.key === colorMode.preference))
+
+watch(currIndex, i => {
+  colorMode.preference = colors[i].key
+})
 
 
 const route = useRoute()
@@ -42,7 +57,7 @@ useHead({
 })
 
 
-watch(langStore, l => i18n.locale.value = l.lang)
+watch(lang, l => i18n.locale.value = l)
 
 
 useSchemaOrg([
@@ -62,24 +77,18 @@ const shown = ref(false)
 </script>
 
 <template>
-  <!--  <h1 class="text-amber-500">{{ $t('other.test') }}</h1>-->
-  <!--  <h2 class="text-white">{{ $t('other.varr', {world: 'aa'}) }}</h2>-->
-  <!--  <button v-if="auth.user" class="dark:bg-white p-3 ml-3 rounded" @click.prevent="auth.logout()">Logout</button>-->
-  <!--  <NuxtLink is="button" v-else :to="{query: {r: route.path}, path: '/login'}" class="dark:bg-white p-3 ml-3 rounded">-->
-  <!--    Login-->
-  <!--  </NuxtLink>-->
   <NuxtLayout>
     <div class="flex flex-col h-screen">
       <header
-          class="py-5 bg-light dark:bg-text md:flex overflow-hidden justify-between items-center border-light dark:border-text border-b-primary dark:border-b-primarydark border-2">
+          class="bg-light dark:bg-primary md:flex overflow-hidden justify-between items-center border-light dark:border-primary border-b-primary dark:border-b-primarydark border-2">
         <div class="pl-5 flex justify-between">
           <NuxtLink to="/">
             <Logo class="w-[180px] h-[90px]"/>
           </NuxtLink>
-          <div class="text-right md:hidden my-auto p-5 mr-5" @click.prevent="shown = !shown"><span
+          <div class="text-right md:hidden my-auto p-5 mr-5 cursor-pointer" @click.prevent="shown = !shown"><span
               class="material-icons-outlined" style="font-size: 48px">menu</span></div>
         </div>
-        <div :class="{hidden: !shown}" class="pt-5 md:pt-0 flex-col md:flex-row flex md:flex">
+        <div :class="{hidden: !shown}" class="pt-5 md:pt-0 flex-col md:flex-row flex md:flex items-center">
           <NuxtLink class="header-link" to="/explore">{{ $t('header.explore') }}</NuxtLink>
           <NuxtLink class="header-link" to="/ranking">{{ $t('header.ranking') }}</NuxtLink>
           <NuxtLink v-if="auth.user" class="header-link" to="/user">{{ auth.user.name }}</NuxtLink>
@@ -88,12 +97,27 @@ const shown = ref(false)
               $t('header.login')
             }}
           </NuxtLink>
+          <div class="header-btn flex justify-evenly">
+            <div class="rounded-full border-2
+            bg-white hover:bg-gray-100 border-gray-100 hover:border-gray-200
+            dark:bg-gray-700 dark:hover:bg-gray-800 dark:border-gray-800 dark:hover:border-gray-900
+            duration-300 w-12 h-12 flex justify-center items-center cursor-pointer transition hover:shadow-xl dark:shadow-gray-800"
+                 @click="currIndex = (currIndex + 1) % colors.length"
+            >
+              <span :title="$t(`darkmode.${colors[currIndex].key}`)"
+                    class="material-icons-outlined">{{ colors[currIndex].icon }}</span>
+            </div>
+            <div :class="{de: lang === 'de', en: lang === 'en'}"
+                 class="rounded-full duration-300 w-12 h-12 cursor-pointer transition hover:shadow-xl dark:shadow-gray-800"
+                 @click="langBtn()"
+            ></div>
+          </div>
         </div>
       </header>
       <main class="flex-1 overflow-y-auto p-5">
         <NuxtPage/>
       </main>
-      <footer class="pb-5 pt-10 bg-primary text-center">
+      <footer class="pb-5 pt-10 bg-primary dark:bg-primarydark text-center">
         <select v-model="colorMode.preference"
                 class="p-1 rounded border
                     bg-mexican-red-50
@@ -106,9 +130,9 @@ const shown = ref(false)
           <option value="dark">{{ $t('darkmode.dark') }}</option>
           <option value="sepia">{{ $t('darkmode.sepia') }}</option>
         </select>
-        <select v-model="langStore.lang">
-          <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">
-            {{ lang }}
+        <select v-model="lang">
+          <option v-for="(l, i) in langs" :key="`Lang${i}`" :value="l">
+            {{ l }}
           </option>
         </select>
       </footer>
@@ -118,7 +142,50 @@ const shown = ref(false)
 </template>
 <style>
 .header-link {
-  @apply w-32 text-center text-xl font-light text-text dark:text-light py-2.5 md:py-0 hover:font-normal
+  @apply w-32 text-center text-xl font-light text-primary dark:text-light py-2.5 md:py-0 hover:font-normal
+}
+
+.header-btn {
+  @apply w-32 text-center text-xl font-light text-primary dark:text-light py-2.5 md:py-0
+}
+
+/* based on https://pixelastic.github.io/css-flags/ */
+.de {
+  background: linear-gradient(180deg, #000 0, #000 33%, #FF0000 33%, #FF0000 67%, #FFCC00 67%, #FFCC00 100%);
+}
+
+.en {
+  background: linear-gradient(180deg,
+  #ba0c2f 0%, #ba0c2f 20%,
+  #FFF 20%, #FFF 40%,
+  #ba0c2f 40%, #ba0c2f 60%,
+  #FFF 60%, #FFF 80%,
+  #ba0c2f 80%, #ba0c2f 100%);
+}
+
+.en:before {
+  @apply w-6 h-6;
+  content: "";
+  display: block;
+  position: relative;
+  background-color: #012169;
+  left: 0;
+  top: 0;
+  border-top-left-radius: 1.5rem;
+}
+
+.en:after {
+  color: transparent;
+  content: "★";
+  font-size: 7px;
+  height: 7px;
+  line-height: 7px;
+  text-align: center;
+  position: relative;
+  width: 7px;
+  top: -45px;
+  left: -26px;
+  text-shadow: 20px 10px 0 #fff, 15px 15px 0 #fff, 20px 20px #fff, 10px 10px 0 #fff, 10px 20px 0 #fff;
 }
 
 * {
