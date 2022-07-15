@@ -37,6 +37,7 @@ export default defineEventHandler(async (event) => {
         }
     } else {
         skip = typeof page === "string" ? (parseInt(page) - 1) * amountOfCities : 0
+        take = amountOfCities
 
         const count = await prisma.city.count({
             where: {},
@@ -52,13 +53,14 @@ export default defineEventHandler(async (event) => {
         }
     }
 
+
     const cities = await prisma.city.findMany({
         skip,
         take,
         where,
         select: {
-            id: true,
             name: true,
+            slug: true,
             loc_lat: true,
             loc_lon: true,
             north: true,

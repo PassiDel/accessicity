@@ -79,7 +79,6 @@
 </template>
 
 <style scoped>
-@import "@fontsource/roboto";
 
 .cls-1 {
   stroke-width: 10px;
