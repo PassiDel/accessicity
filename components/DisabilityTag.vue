@@ -31,7 +31,3 @@ const {name, slug, id, icon, trans_name, description, verified} = defineProps<{
   text-black dark:text-black
   bg-white dark:bg-white">{{ icon }}</span>
 </template>
-
-<style scoped>
-@import 'material-icons/iconfont/filled.css';
-</style>

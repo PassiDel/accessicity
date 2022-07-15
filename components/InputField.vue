@@ -53,8 +53,3 @@ watch(_model, mo => {
 
   </div>
 </template>
-
-<style scoped>
-@import 'material-icons/iconfont/filled.css';
-
-</style>

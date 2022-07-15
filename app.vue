@@ -4,6 +4,9 @@ import {useLangStore} from '~/store/lang';
 import {useI18n} from "vue-i18n";
 import {defineOrganization, defineWebPage, useColorMode, useHead, useRoute, useSchemaOrg, watch} from "#imports";
 import {useAuthStore} from "~/store/auth";
+import 'material-icons/iconfont/outlined.css'
+import 'material-icons/iconfont/filled.css'
+import '@fontsource/roboto'
 
 const colorMode = useColorMode()
 
@@ -114,7 +117,6 @@ const shown = ref(false)
 
 </template>
 <style>
-@import 'material-icons/iconfont/outlined.css';
 .header-link {
   @apply w-32 text-center text-xl font-light text-text dark:text-light py-2.5 md:py-0 hover:font-normal
 }
