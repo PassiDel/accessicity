@@ -5,12 +5,15 @@ const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
     const id = parseInt(event.context.params.id);
+    if (id === 0 || isNaN(id))
+        return sendError(event, createError({statusCode: 400, statusMessage: 'Bad Request - Invalid user id'}))
+
     const user = await prisma.user.findUnique({
         where: {id}, select: {
             id: true,
             name: true,
             createdAt: true,
-            email: event.context.user && event.context.user.id === id,
+            email: (event.context.user && event.context.user.id === id) || false,
             disabilitys: {
                 select: {
                     verified: true,

@@ -52,6 +52,7 @@ export default defineEventHandler(async () => {
                                                     id: true,
                                                     slug: true,
                                                     icon: true,
+                                                    trans_name: true
                                                 }
                                             }
                                         },
@@ -68,7 +69,8 @@ export default defineEventHandler(async () => {
                                         select: {
                                             id: true,
                                             slug: true,
-                                            icon: true
+                                            icon: true,
+                                            trans_name: true
                                         }
                                     }
                                 }
