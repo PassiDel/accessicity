@@ -55,7 +55,7 @@ watch(selected, (l, old) => {
     <div
         class="flex flex-col xl:flex-row items-center xl:items-start justify-between space-y-5 xl:space-y-0 xl:space-x-5 mt-5">
       <div v-for="(city, i) in result" :class="{'bg-gray-500 dark:bg-primarydark': selected === i}"
-           class="border border-text w-48 flex-inline"
+           class="border border-text dark:border-white w-48 flex-inline"
            @click.stop="selected = i"
       >
         <div class="h-32">
