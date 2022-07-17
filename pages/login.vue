@@ -8,7 +8,7 @@ import {email as _email, maxLength, minLength, required} from "~/utils/i18n-vali
 import {useI18n} from "vue-i18n";
 
 definePageMeta({
-  layout: 'auth',
+  layout: 'full',
   description: 'Login with an account',
   title: 'Login',
   image: '/image.jpgggg',

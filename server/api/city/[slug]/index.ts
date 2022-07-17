@@ -5,10 +5,12 @@ const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
 
-    const cityId = event.context.params.id
+    const {slug} = event.context.params
 
     return await prisma.city.findUnique({
-        where: {slug: cityId},
+        where: {
+            slug
+        },
         select: {
             id: true,
             name: true,

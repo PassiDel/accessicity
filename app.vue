@@ -77,7 +77,6 @@ const shown = ref(false)
 </script>
 
 <template>
-  <NuxtLayout>
     <div class="flex flex-col h-screen">
       <header
           class="bg-light dark:bg-primary md:flex overflow-hidden justify-between items-center border-light dark:border-primary border-b-primary dark:border-b-primarydark border-2">
@@ -114,9 +113,9 @@ const shown = ref(false)
           </div>
         </div>
       </header>
-      <main class="flex-1 overflow-y-auto p-5">
+      <NuxtLayout>
         <NuxtPage/>
-      </main>
+      </NuxtLayout>
       <footer class="pb-5 pt-10 bg-primary dark:bg-primarydark text-center">
         <select v-model="colorMode.preference"
                 class="p-1 rounded border
@@ -137,8 +136,6 @@ const shown = ref(false)
         </select>
       </footer>
     </div>
-  </NuxtLayout>
-
 </template>
 <style>
 .header-link {

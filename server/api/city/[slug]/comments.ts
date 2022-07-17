@@ -1,19 +1,16 @@
-import {createError, defineEventHandler, sendError, useQuery} from "h3";
+import {defineEventHandler, useQuery} from "h3";
 import {PrismaClient} from "@prisma/client";
 
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-    if (!event.context.user)
-        return sendError(event, createError({statusCode: 403, statusMessage: 'Forbidden'}))
-
     const amountOfComments = 10;
     const shouldSkip = {
         skip: undefined,
         cursor: undefined
     };
 
-    const cityId = parseInt(event.context.params.id)
+    const {slug} = event.context.params
 
     const {pointer = undefined} = useQuery(event)
 
@@ -29,7 +26,9 @@ export default defineEventHandler(async (event) => {
         },
         ...shouldSkip,
         where: {
-            cityId,
+            city: {
+                slug
+            },
             public: true
         },
         select: {
@@ -52,6 +51,7 @@ export default defineEventHandler(async (event) => {
                                     id: true,
                                     slug: true,
                                     icon: true,
+                                    trans_name: true
                                 }
                             }
                         },

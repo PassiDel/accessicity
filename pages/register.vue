@@ -7,7 +7,7 @@ import {checked, email as _email, maxLength, minLength, required} from "~/utils/
 import {useI18n} from "vue-i18n";
 
 definePageMeta({
-  layout: 'auth',
+  layout: 'full',
   description: 'Register an account',
   title: 'Register',
   image: '/image.jpgggg',

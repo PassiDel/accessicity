@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {navigateTo, ref, useRoute} from "#imports";
+import {definePageMeta, ref, useNuxtApp, useRoute} from "#imports";
 import {useAuthStore} from "~/store/auth";
 import {useFetchWithHeader} from "~/composable/fetch";
 import useVuelidate from "@vuelidate/core";
@@ -11,19 +11,29 @@ import CommentList from "~/components/CommentList.vue";
 const route = useRoute()
 const auth = useAuthStore()
 
+definePageMeta({
+  middleware: (r) => {
+    const auth = useAuthStore()
+    if (!r.params.id && !auth.user)
+      return {query: {r: r.path}, path: '/login'}
+  }
+})
 
-if (!route.params.id && !auth.user)
-  await navigateTo({query: {r: route.path}, path: '/login'})
 
 const id = route.params.id ? parseInt(typeof route.params.id === 'string' ? route.params.id : route.params.id[0]) : auth.user.id
 
 const {data, error, refresh} = await useFetchWithHeader('/api/user/' + id)
+if (error.value && process.server) {
+  const nuxtApp = useNuxtApp()
+  // @ts-ignore
+  nuxtApp.ssrContext.res.statusCode = error.value?.data?.statusCode || 400;
+}
 
 const isUser = auth.user && auth.user.id === id
 const editMode = ref(false)
 
 const editData = ref({
-  name: data.value.user.name,
+  name: data.value?.user.name,
   password: ''
 })
 
@@ -42,7 +52,7 @@ const v$ = useVuelidate({
 }, {editData})
 
 const openEditMode = () => {
-  editData.value.name = data.value.user.name
+  editData.value.name = data.value?.user.name
   editData.value.password = ''
   v$.value.$reset()
 
@@ -66,7 +76,7 @@ const save = async () => {
     return console.log(postError.value)
 
   await refresh()
-  auth.user.name = data.value.user.name
+  auth.user.name = data.value?.user.name
   editMode.value = false
 }
 </script>
@@ -105,8 +115,9 @@ const save = async () => {
     </div>
     <CommentList :comments="data.user.comments" :user="data.user" class="flex-grow space-y-2.5"/>
   </div>
-  <div v-else>
-    <h1 class="dark:text-white">{{ error.data?.statusMessage ?? error.message }}</h1>
+  <div v-else class="p-5 mx-auto text-center">
+    <h1 class="dark:text-white text-3xl font-bold mb-5">{{ error.data?.statusMessage ?? error.message }}</h1>
+    <a class="dark:text-white text-xl cursor-pointer italic underline" @click.prevent="$router.go(-1)">Go back</a>
   </div>
 </template>
 

@@ -55,7 +55,7 @@ watch(selected, (l, old) => {
     <div
         class="flex flex-col xl:flex-row items-center xl:items-start justify-between space-y-5 xl:space-y-0 xl:space-x-5 mt-5">
       <div v-for="(city, i) in result" :class="{'bg-gray-500 dark:bg-primarydark': selected === i}"
-           class="border border-text w-48 flex-inline"
+           class="border border-text dark:border-white w-48 flex-inline"
            @click.stop="selected = i"
       >
         <div class="h-32">
@@ -80,16 +80,20 @@ watch(selected, (l, old) => {
       </div>
     </div>
     <div class="w-full h-[33rem] mt-5">
-      <l-map ref="map"
-             @ready="ready = true; map.leafletObject.flyTo(center, zoom)"
-      >
-        <l-tile-layer :attribution="attribution" :url="url"></l-tile-layer>
-        <l-marker v-for="city in result" :lat-lng="[city.city.loc_lat, city.city.loc_lon]"></l-marker>
-        <l-geo-json
-            v-if="selected >= 0"
-            :geojson="{type: 'FeatureCollection', features: [result[selected].city.outline]}"
-        ></l-geo-json>
-      </l-map>
+      <ClientOnly>
+        <l-map ref="map"
+               :center="center"
+               :zoom="zoom"
+               @ready="ready = true; map.leafletObject.flyTo(center, zoom)"
+        >
+          <l-tile-layer :attribution="attribution" :url="url"></l-tile-layer>
+          <l-marker v-for="city in result" :lat-lng="[city.city.loc_lat, city.city.loc_lon]"></l-marker>
+          <l-geo-json
+              v-if="selected >= 0"
+              :geojson="{type: 'FeatureCollection', features: [result[selected].city.outline]}"
+          ></l-geo-json>
+        </l-map>
+      </ClientOnly>
     </div>
     <div v-if="selected > -1">
       <CommentList :city="result[selected].city" :comments="result[selected].city.comments" class="space-y-2.5"/>

@@ -22,7 +22,13 @@ export default defineEventHandler(async (event) => {
         return sendError(event, createError({statusCode: 403, statusMessage: 'Forbidden'}))
 
     const userId = event.context.user.id;
-    const cityId = parseInt(event.context.params.id)
+    const {slug} = event.context.params
+
+    const {id: cityId} = await prisma.city.findUnique({
+        where: {
+            slug
+        }
+    })
 
     // TODO: add input validation
     const {title, message, rating, disability} = await useBody<AddCommentPayload>(event)

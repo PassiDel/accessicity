@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-const {comments, user, city} = defineProps<{
+const {comments, user, city, forceSmall} = defineProps<{
   comments: {
     id: number,
     createdAt: Date,
@@ -47,15 +47,17 @@ const {comments, user, city} = defineProps<{
     id: number,
     name: string
   },
+  forceSmall?: boolean
 }>()
 </script>
 
 <template>
   <div class="w-auto text-start dark:text-white">
     <div v-for="comment in comments"
-         class="flex space-x-0 md:space-x-10 space-y-5 md:space-y-0 md:flex-row flex-col p-5 border-2 bg-gray-100 dark:bg-primarydark">
+         :class="{'md:space-x-10 md:space-y-0 md:flex-row': !forceSmall}"
+         class="flex space-x-0 space-y-5 flex-col p-5 border-2 bg-gray-100 dark:bg-primarydark">
       <div class="w-52 shrink-0">
-        <NuxtLink :to="{path: '/explore/' + comment.city?.slug ?? city.slug}">
+        <NuxtLink :to="{path: '/explore/' + (comment.city?.slug ?? city.slug)}">
           <h3 class="text-lg font-bold">{{ comment.city?.name ?? city.name }}</h3>
         </NuxtLink>
         <NuxtLink :to="{path: '/user/' + (comment.author ? comment.author.id : user.id)}">
@@ -77,7 +79,7 @@ const {comments, user, city} = defineProps<{
       </div>
       <div class="w-48 shrink-0 self-center md:self-start">
         <p class="">
-          <DisabilityTag class="ml-1 mr-1" icon="accessibility" name="human" trans_name="disability.wheelchair"
+          <DisabilityTag :name="$t('icon.accessibility')" class="ml-1 mr-1" icon="accessibility"
                          verified="true"/>
           <Stars :value="comment.rating"/>
         </p>

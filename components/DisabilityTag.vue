@@ -27,7 +27,7 @@ const {name, slug, id, icon, trans_name, description, verified} = defineProps<{
       'dark:border-yellow-700': !verified,
     }"
     :title="trans_name ? $t(`${trans_name}.name`) : (description || name)"
-    class="material-icons p-1 rounded-full border-2
+    class="material-icons p-1 rounded-full border-2 cursor-help
   text-black dark:text-black
   bg-white dark:bg-white">{{ icon }}</span>
 </template>
