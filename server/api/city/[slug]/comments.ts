@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
         cursor: undefined
     };
 
-    const cityId = parseInt(event.context.params.id)
+    const {slug} = event.context.params
 
     const {pointer = undefined} = useQuery(event)
 
@@ -26,7 +26,9 @@ export default defineEventHandler(async (event) => {
         },
         ...shouldSkip,
         where: {
-            cityId,
+            city: {
+                slug
+            },
             public: true
         },
         select: {
@@ -49,6 +51,7 @@ export default defineEventHandler(async (event) => {
                                     id: true,
                                     slug: true,
                                     icon: true,
+                                    trans_name: true
                                 }
                             }
                         },
