@@ -4,7 +4,7 @@ import {PrismaClient} from "@prisma/client";
 const prisma = new PrismaClient()
 
 type DisabilityRating = {
-    id: number,
+    disabilityId: number,
     rating: number
 };
 
@@ -12,9 +12,7 @@ interface AddCommentPayload {
     title: string,
     message: string,
     rating: number,
-    disability?: [
-        DisabilityRating
-    ]
+    disability?: DisabilityRating[]
 }
 
 export default defineEventHandler(async (event) => {
@@ -40,12 +38,14 @@ export default defineEventHandler(async (event) => {
             message,
             rating,
             disability: {
-                create: disability.map(d => {
-                    return {
-                        rating: d.rating,
-                        disabilityId: d.id
-                    }
-                })
+                createMany: {
+                    data: disability.map(d => {
+                        return {
+                            rating: d.rating,
+                            disabilityId: d.disabilityId
+                        }
+                    })
+                }
             }
         }
     })

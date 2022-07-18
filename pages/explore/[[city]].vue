@@ -4,12 +4,16 @@ import "leaflet/dist/leaflet.css"
 import {LControlZoom, LGeoJson, LMap, LTileLayer} from '@vue-leaflet/vue-leaflet';
 // noinspection TypeScriptCheckImport
 import {useI18n} from "vue-i18n";
+import {useAuthStore} from "~/store/auth";
+import CommentAdd from "~/components/CommentAdd.vue";
+import {useLazyFetchWithHeader} from "~/composable/fetch";
 
 
 definePageMeta({
   layout: 'full',
 })
 
+const auth = useAuthStore()
 const url = ref('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
 const i18n = useI18n();
 const attribution = i18n.t('map.attribution')
@@ -46,8 +50,8 @@ const update = () => {
 }
 const city = ref(citySlug ? {slug: citySlug, id: 0, name: citySlug} : null)
 
-const {data} = await useLazyFetch(() => `/api/city/${city.value?.slug}/comments`)
-const {data: outlineData} = await useLazyFetch(() => `/api/city/${city.value?.slug}`)
+const {data, refresh: refreshComments} = await useLazyFetchWithHeader(() => `/api/city/${city.value?.slug}/comments`)
+const {data: outlineData} = await useLazyFetchWithHeader(() => `/api/city/${city.value?.slug}`)
 
 const selectCity = async c => {
   city.value = c
@@ -126,8 +130,11 @@ watch(outlineData, fitToBounds)
           {{ c.name }}
         </button>
       </div>
-      <CommentList v-else-if="search" :city="city" :comments="data" :forceSmall="true" class="space-y-2.5"/>
-      <!-- TODO: add disability filtering-->
+      <div v-else-if="search">
+        <CommentAdd v-if="auth.user" :slug="city.slug" @success="refreshComments()"/>
+        <CommentList :city="city" :comments="data" :forceSmall="true" class="space-y-2.5"/>
+        <!-- TODO: add disability filtering-->
+      </div>
     </div>
   </div>
 </template>

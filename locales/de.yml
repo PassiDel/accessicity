@@ -30,12 +30,16 @@ validations:
   required: Dieses Feld ist erforderlich.
   email: Der eingegebene Wert ist keine gültige E-Mail-Adresse.
   minLength: Der eingegebene Wert sollte mindestens %{min} lang sein.
+  maxLength: Der eingegebene Wert sollte maximal %{max} lang sein.
+  minValue: Der eingegebene Wert sollte mindestens %{min} sein.
   checked: Dieses Feld muss angekreuzt werden.
   error: Ein Fehler ist aufgetreten.
 input:
   email: E-Mail
   password: Passwort
   name: Anzeigename
+  title: Titel
+  message: Kommentar
 header:
   explore: Erforschen
   ranking: Ranking
@@ -72,3 +76,6 @@ ranking:
     one: Basierend auf einer Stimme
     some: Basierend auf %{based} Stimmen
   city: Stadt
+explore:
+  send: Senden
+  add_comment: Schreibe einen neuen Kommentar
