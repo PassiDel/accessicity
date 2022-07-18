@@ -21,8 +21,8 @@ const emit = defineEmits(['update:model'])
     >
       <input
           v-if="type !== 'textarea'"
-          v-model="model"
-          @input="emit('update:model', model)"
+          :value="model"
+          @input="e => {model = e.target.value; emit('update:model', model)}"
           :name="v?.$path ?? name"
           :type="type"
           class="w-full border-none bg-transparent dark:text-white outline-none placeholder:italic focus:outline-none"
@@ -30,12 +30,12 @@ const emit = defineEmits(['update:model'])
           @blur="v?.$touch()"
       />
       <textarea v-else
-                v-model="model"
+                :value="model"
                 :name="v?.$path ?? name"
                 class="w-full border-none bg-transparent dark:text-white outline-none placeholder:italic focus:outline-none max-h-48 min-h-[56px]  resize-y"
                 placeholder=" "
                 @blur="v?.$touch()"
-                @input="emit('update:model', model)"
+                @input="e => {model = e.target.value; emit('update:model', model)}"
       >
       </textarea>
       <label :for="v?.$path ?? name"
