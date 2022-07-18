@@ -30,12 +30,16 @@ validations:
   required: This field is required.
   email: Value is not a valid email address.
   minLength: Value should be at least %{min} characters long.
+  maxLength: Value should be at most %{max} characters long.
+  minValue: Value should be at least %{min}.
   checked: This field needs to be checked.
   error: An error occurred.
 input:
   email: Email
   password: Password
   name: Display name
+  title: Title
+  message: Message
 header:
   explore: Explore
   ranking: Ranking
@@ -66,3 +70,12 @@ login:
   button: Login
   no_account: No account yet?
   register_now: Register now!
+ranking:
+  based:
+    none: No votes
+    one: Based on one vote
+    some: Based on %{based} votes
+  city: City
+explore:
+  send: Send
+  add_comment: Add a new comment

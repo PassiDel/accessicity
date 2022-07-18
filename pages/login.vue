@@ -60,6 +60,7 @@ const submit = async () => {
   authError.value = error.value
 
   if (error.value) {
+    password.value = ''
     v$.value.$reset()
     setTimeout(() => {
       loading.value = false

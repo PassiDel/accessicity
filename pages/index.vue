@@ -59,18 +59,24 @@ watch(selected, (l, old) => {
            @click.stop="selected = i"
       >
         <div class="h-32">
-          <l-map
-              :center="{lat: city.city.loc_lat, lng: city.city.loc_lon}"
-              :options="{zoomControl: false, doubleClickZoom: false, scrollWheelZoom: false, dragging: false, trackResize: false, boxZoom: false, keyboard: false}"
-              :zoom="8"
-          >
-            <l-tile-layer :attribution="attribution" :url="url"></l-tile-layer>
-            <l-geo-json
-                :geojson="{type: 'FeatureCollection', features: [city.city.outline]}"
-            />
-          </l-map>
+          <ClientOnly>
+            <l-map
+                :center="{lat: city.city.loc_lat, lng: city.city.loc_lon}"
+                :options="{zoomControl: false, doubleClickZoom: false, scrollWheelZoom: false, dragging: false, trackResize: false, boxZoom: false, keyboard: false}"
+                :zoom="8"
+            >
+              <l-tile-layer :attribution="attribution" :url="url"></l-tile-layer>
+              <l-geo-json
+                  :geojson="{type: 'FeatureCollection', features: [city.city.outline]}"
+              />
+            </l-map>
+          </ClientOnly>
         </div>
-        <h3 class="font-bold mt-2 h-auto flex-grow h-[3.5rem] dark:text-white">{{ city.city.name }}</h3>
+        <h3 class="font-bold mt-2 h-auto flex-grow h-[3.5rem] dark:text-white">
+          <NuxtLink :to="{path: '/explore/' + city.city.slug}">
+            <h3 class="text-lg font-bold">{{ city.city.name }}</h3>
+          </NuxtLink>
+        </h3>
         <p class="place-items-center my-2">
           <DisabilityTag :name="$t('icon.accessibility')" :verified="true"
                          class="ml-1 mr-1"
