@@ -29,7 +29,15 @@ export default defineEventHandler(async (event) => {
             city: {
                 slug
             },
-            public: true
+            OR: [
+                {
+                    public: true
+                },
+                {
+                    public: false,
+                    authorId: event.context.user?.id ?? 0
+                }
+            ]
         },
         select: {
             id: true,
@@ -68,7 +76,8 @@ export default defineEventHandler(async (event) => {
                         select: {
                             id: true,
                             slug: true,
-                            icon: true
+                            icon: true,
+                            trans_name: true
                         }
                     }
                 }
