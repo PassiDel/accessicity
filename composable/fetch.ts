@@ -1,8 +1,9 @@
 import {useAuthStore} from "~/store/auth";
 import {useFetch, useLazyFetch} from "#imports";
 import {UseFetchOptions} from "#app";
+import {Ref} from "@vue/reactivity";
 
-export const useFetchWithHeader = (url: string, opts?: UseFetchOptions<any>) => {
+export const useFetchWithHeader = (url: string | Ref<string> | (() => string), opts?: UseFetchOptions<any>) => {
     let headers = {}
 
     const auth = useAuthStore()
@@ -16,7 +17,7 @@ export const useFetchWithHeader = (url: string, opts?: UseFetchOptions<any>) => 
     })
 }
 
-export const useLazyFetchWithHeader = (url: string, opts?: UseFetchOptions<any>) => {
+export const useLazyFetchWithHeader = (url: string | Ref<string> | (() => string), opts?: UseFetchOptions<any>) => {
     let headers = {}
 
     const auth = useAuthStore()
