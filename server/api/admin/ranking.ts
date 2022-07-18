@@ -73,9 +73,6 @@ export default defineEventHandler(async (event) => {
         })
     })
 
-    console.log(ratings)
-    console.log(cityOverallRating)
-
     const creates = ratings.map(d => d.cities.map(c => {
         return {
             disabilityId: d.disabilityId,

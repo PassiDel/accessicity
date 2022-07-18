@@ -46,7 +46,6 @@ const update = () => {
   if (search.value === '')
     return
   _search.value = search.value
-  console.log(_search.value, result)
 }
 const city = ref(citySlug ? {slug: citySlug, id: 0, name: citySlug} : null)
 
@@ -65,7 +64,6 @@ watch(router.currentRoute, n => {
     return
 
   const {city: cityId} = n.params
-  console.log(cityId)
 
   if (!cityId) {
     city.value = null
