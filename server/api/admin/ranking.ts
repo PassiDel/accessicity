@@ -19,7 +19,8 @@ export default defineEventHandler(async (event) => {
     })).map(c => {
         return {
             cityId: c.cityId,
-            value: c._sum.rating / c._count._all
+            value: c._sum.rating / c._count._all,
+            basedOn: c._count._all
         }
     });
 
@@ -72,11 +73,15 @@ export default defineEventHandler(async (event) => {
         })
     })
 
+    console.log(ratings)
+    console.log(cityOverallRating)
+
     const creates = ratings.map(d => d.cities.map(c => {
         return {
             disabilityId: d.disabilityId,
             cityId: c.cityId,
-            value: c.rating
+            value: c.rating,
+            basedOn: c.count
         }
     })).flat(1)
 

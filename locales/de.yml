@@ -66,3 +66,9 @@ login:
   button: Anmelden
   no_account: Noch keinen Account?
   register_now: Jetzt registrieren!
+ranking:
+  based:
+    none: Keine Stimmen
+    one: Basierend auf einer Stimme
+    some: Basierend auf %{based} Stimmen
+  city: Stadt

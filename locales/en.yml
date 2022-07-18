@@ -66,3 +66,9 @@ login:
   button: Login
   no_account: No account yet?
   register_now: Register now!
+ranking:
+  based:
+    none: No votes
+    one: Based on one vote
+    some: Based on %{based} votes
+  city: City

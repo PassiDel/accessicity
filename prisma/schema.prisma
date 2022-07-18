@@ -88,6 +88,7 @@ model Ranking {
   disability   Disability @relation(fields: [disabilityId], references: [id], onDelete: Cascade)
   disabilityId Int
   value        Decimal    @db.Decimal(6, 5)
+  basedOn      Int        @default(0)
 
   @@unique([cityId, disabilityId])
 }
@@ -96,6 +97,7 @@ model OverallRanking {
   city   City    @relation(fields: [cityId], references: [id], onDelete: Cascade)
   cityId Int     @unique
   value  Decimal @db.Decimal(6, 5)
+  basedOn Int    @default(0)
 }
 
 enum Role {
