@@ -3,7 +3,7 @@ FROM node:16-alpine AS builder
 
 WORKDIR /tmp/build-env
 
-COPY package.json ./
+COPY package*.json ./
 COPY prisma ./prisma/
 RUN npm install --frozen-lockfile
 
@@ -20,7 +20,7 @@ EXPOSE 3000
 ENV NODE_ENV=production
 CMD npx prisma migrate deploy && npm run start
 
-COPY package.json ./
+COPY package*.json ./
 COPY prisma ./prisma/
 RUN npm install --production --frozen-lockfile && npm cache verify
 
