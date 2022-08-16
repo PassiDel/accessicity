@@ -2,7 +2,17 @@
 import {useLangStore} from '~/store/lang';
 // noinspection TypeScriptCheckImport
 import {useI18n} from "vue-i18n";
-import {defineOrganization, defineWebPage, ref, useColorMode, useHead, useRoute, useSchemaOrg, watch} from "#imports";
+import {
+  computed,
+  defineOrganization,
+  defineWebPage,
+  ref,
+  useColorMode,
+  useHead,
+  useRouter,
+  useSchemaOrg,
+  watch
+} from "#imports";
 import {useAuthStore} from "~/store/auth";
 import 'material-icons/iconfont/outlined.css'
 import 'material-icons/iconfont/filled.css'
@@ -31,30 +41,30 @@ watch(currIndex, i => {
 })
 
 
-const route = useRoute()
+const {currentRoute} = useRouter()
 const appName = 'Accessicity';
 const logo = '/logo.png'
-const title = route.meta.title ? `${appName} - ${route.meta.title}` : appName
-const description = route.meta.description ? route.meta.description : appName
-const image = route.meta.image ? route.meta.image : logo
-useHead({
+const title = computed(() => currentRoute.value.meta.title ? `${appName} - ${currentRoute.value.meta.title.startsWith('t:') ? i18n.t(currentRoute.value.meta.title.slice(2)) : currentRoute.value.meta.title}` : appName)
+const description = computed(() => currentRoute.value.meta.description ? currentRoute.value.meta.description : appName)
+const image = computed(() => currentRoute.value.meta.image ? currentRoute.value.meta.image : logo)
+useHead(computed(() => ({
   htmlAttrs: {
     lang: i18n.locale
   },
   bodyAttrs: {
     class: 'bg-main dark:bg-primary transition duration-500'
   },
-  title,
+  title: title.value,
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   charset: 'utf-8',
   meta: [
-    {name: 'description', content: description},
-    {name: 'og:description', content: description},
-    {name: 'og:title', content: title},
-    {name: 'og:image', content: image},
+    {name: 'description', content: description.value},
+    {name: 'og:description', content: description.value},
+    {name: 'og:title', content: title.value},
+    {name: 'og:image', content: image.value},
     {name: 'og:site_name', content: appName}
   ],
-})
+})))
 
 
 watch(lang, l => i18n.locale.value = l)
@@ -92,7 +102,7 @@ const shown = ref(false)
           <NuxtLink class="header-link" to="/ranking">{{ $t('header.ranking') }}</NuxtLink>
           <NuxtLink v-if="auth.user" class="header-link" to="/user">{{ auth.user.name }}</NuxtLink>
           <a v-if="auth.user" class="header-link" href="#" @click.prevent="auth.logout()">{{ $t('header.logout') }}</a>
-          <NuxtLink v-else :to="{query: {r: route.path}, path: '/login'}" class="header-link">{{
+          <NuxtLink v-else :to="{query: {r: currentRoute.path}, path: '/login'}" class="header-link">{{
               $t('header.login')
             }}
           </NuxtLink>
@@ -116,24 +126,9 @@ const shown = ref(false)
       <NuxtLayout>
         <NuxtPage/>
       </NuxtLayout>
-      <footer class="pb-5 pt-10 bg-primary dark:bg-primarydark text-center">
-        <select v-model="colorMode.preference"
-                class="p-1 rounded border
-                    bg-mexican-red-50
-                      hover:bg-mexican-red-200
-                    dark:bg-mexican-red-800 dark:text-white dark:border-zinc-700
-                      dark:hover:bg-mexican-red-600
-                    transition duration-300 ease-out">
-          <option value="system">{{ $t('darkmode.system') }}</option>
-          <option value="light">{{ $t('darkmode.light') }}</option>
-          <option value="dark">{{ $t('darkmode.dark') }}</option>
-          <option value="sepia">{{ $t('darkmode.sepia') }}</option>
-        </select>
-        <select v-model="lang">
-          <option v-for="(l, i) in langs" :key="`Lang${i}`" :value="l">
-            {{ l }}
-          </option>
-        </select>
+      <footer class="pb-5 pt-5 bg-primary dark:bg-primarydark text-center">
+        <router-link class="footer-link" to="/imprint">{{ $t('legal.imprint') }}</router-link>
+        <router-link class="footer-link" to="/privacy">{{ $t('legal.privacy') }}</router-link>
       </footer>
     </div>
 </template>
@@ -144,6 +139,10 @@ const shown = ref(false)
 
 .header-btn {
   @apply w-32 text-center text-xl font-light text-primary dark:text-light py-2.5 md:py-0
+}
+
+.footer-link {
+  @apply px-2 dark:text-buttondark text-button hover:underline
 }
 
 /* based on https://pixelastic.github.io/css-flags/ */

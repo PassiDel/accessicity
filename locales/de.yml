@@ -79,3 +79,6 @@ ranking:
 explore:
   send: Senden
   add_comment: Schreibe einen neuen Kommentar
+legal:
+  imprint: Impressum
+  privacy: Datenschutzerklärung
