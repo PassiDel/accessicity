@@ -1,20 +1,16 @@
-# Nuxt 3 Minimal Starter
+# Accessicity
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+![logo](./public/apple-touch-icon.png)
+
+Reiseplanung für Städtetrips für Menschen mit Einschränkungen
 
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# yarn
-yarn install
-
 # npm
 npm install
-
-# pnpm
-pnpm install --shamefully-hoist
 ```
 
 ## Development Server
@@ -39,7 +35,18 @@ Locally preview production build:
 npm run preview
 ```
 
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+## Deployment
+
+To run the production version, you can simply use the provided Docker image
+and [Docker-Compose file](docker-compose.yml):
+
+```bash
+docker pull ghcr.io/passidel/accessicity:latest
+docker-compose up -d mariadb
+
+# wait a few seconds for the db to be up
+docker-compose up -d accessicity
+```
 
 ## Seed
 
