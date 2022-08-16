@@ -65,7 +65,7 @@ definePageMeta({
       werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen
       werden wir derartige Inhalte umgehend entfernen.</p>
     <p>&nbsp;</p>
-    <p>Quelle: <a href="https://www.erecht24.de">https://www.e-recht24.de</a></p>
+    <p>Quelle: <a href="https://www.erecht24.de" rel="noopener">https://www.e-recht24.de</a></p>
   </div>
 </template>
 

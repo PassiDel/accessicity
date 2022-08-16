@@ -56,7 +56,7 @@ definePageMeta({
     <p>Wenn die SSL Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht von Dritten
       mitgelesen werden.</p>
     <p>&nbsp;</p>
-    <p>Quelle: <a href="https://www.e-recht24.de">eRecht24</a></p>
+    <p>Quelle: <a href="https://www.e-recht24.de" rel="noopener">eRecht24</a></p>
   </div>
 </template>
 

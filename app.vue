@@ -49,17 +49,19 @@ const description = computed(() => currentRoute.value.meta.description ? current
 const image = computed(() => currentRoute.value.meta.image ? currentRoute.value.meta.image : logo)
 useHead(computed(() => ({
   htmlAttrs: {
-    lang: i18n.locale.value
+    lang: i18n.locale.value,
+    dir: 'ltr'
   },
   bodyAttrs: {
     class: 'bg-main dark:bg-primary transition duration-500'
   },
   title: title.value,
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+  viewport: 'width=device-width, initial-scale=1',
   charset: 'utf-8',
   meta: [
     {name: 'description', content: description.value},
     {name: 'og:description', content: description.value},
+    {name: 'twitter:card', content: description.value},
     {name: 'og:title', content: title.value},
     {name: 'og:image', content: image.value},
     {name: 'og:site_name', content: appName}
@@ -70,6 +72,10 @@ useHead(computed(() => ({
     {rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png'},
     {rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png'},
     {rel: 'manifest', href: '/site.webmanifest'},
+    {rel: 'dns-prefetch', href: 'a.tile.openstreetmap.org'},
+    {rel: 'dns-prefetch', href: 'b.tile.openstreetmap.org'},
+    {rel: 'dns-prefetch', href: 'c.tile.openstreetmap.org'},
+    {rel: 'dns-prefetch', href: 'd.tile.openstreetmap.org'},
   ]
 })))
 
@@ -98,11 +104,11 @@ const shown = ref(false)
       <header
           class="bg-light dark:bg-primary md:flex overflow-hidden justify-between items-center border-light dark:border-primary border-b-primary dark:border-b-primarydark border-2">
         <div class="pl-5 flex justify-between">
-          <NuxtLink to="/">
+          <NuxtLink aria-label="Accessicity" to="/">
             <Logo class="w-[180px] h-[90px]"/>
           </NuxtLink>
           <div class="text-right md:hidden my-auto p-5 mr-5 cursor-pointer" @click.prevent="shown = !shown"><span
-              class="material-icons-outlined" style="font-size: 48px">menu</span></div>
+              class="material-icons-outlined dark:text-white" style="font-size: 48px">menu</span></div>
         </div>
         <div :class="{hidden: !shown}" class="pt-5 md:pt-0 flex-col md:flex-row flex md:flex items-center">
           <NuxtLink class="header-link" to="/explore">{{ $t('header.explore') }}</NuxtLink>
