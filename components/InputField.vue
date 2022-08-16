@@ -24,6 +24,7 @@ const emit = defineEmits(['update:model'])
           :value="model"
           @input="e => {model = e.target.value; emit('update:model', model)}"
           :name="v?.$path ?? name"
+          :id="'f-' + (v?.$path ?? name)"
           :type="type"
           class="w-full border-none bg-transparent dark:text-white outline-none placeholder:italic focus:outline-none"
           placeholder=" "
@@ -32,13 +33,14 @@ const emit = defineEmits(['update:model'])
       <textarea v-else
                 :value="model"
                 :name="v?.$path ?? name"
+                :id="'f-' + (v?.$path ?? name)"
                 class="w-full border-none bg-transparent dark:text-white outline-none placeholder:italic focus:outline-none max-h-48 min-h-[56px]  resize-y"
                 placeholder=" "
                 @blur="v?.$touch()"
                 @input="e => {model = e.target.value; emit('update:model', model)}"
       >
       </textarea>
-      <label :for="v?.$path ?? name"
+      <label :for="'f-' + (v?.$path ?? name)"
              class="z-[-1] absolute left-0 font-light origin-top-left dark:text-white transition-transform duration-300">{{
           placeholder ?? name ?? ''
         }}</label>

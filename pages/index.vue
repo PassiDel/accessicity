@@ -48,8 +48,6 @@ watch(selected, (l, old) => {
     <div class="bg-amber-100 xl:-mx-[9.25rem] -mx-5 -mt-5 mb-5 p-10">
       <h1 class="text-primary font-bold text-4xl">{{ $t('index.title') }}</h1>
       <h2 class="text-text font-medium text-xl mt-5">{{ $t('index.subtitle') }}</h2>
-<!-- TODO: add search -->
-      <input :placeholder="$t('search')" class="mt-5 text-center p-2"/>
     </div>
     <h2 class="font-bold text-3xl dark:text-white">{{ $t('index.top5') }}</h2>
     <div
