@@ -49,7 +49,7 @@ const description = computed(() => currentRoute.value.meta.description ? current
 const image = computed(() => currentRoute.value.meta.image ? currentRoute.value.meta.image : logo)
 useHead(computed(() => ({
   htmlAttrs: {
-    lang: i18n.locale
+    lang: i18n.locale.value
   },
   bodyAttrs: {
     class: 'bg-main dark:bg-primary transition duration-500'
@@ -64,6 +64,13 @@ useHead(computed(() => ({
     {name: 'og:image', content: image.value},
     {name: 'og:site_name', content: appName}
   ],
+  link: [
+    {rel: 'icon', type: 'image/x-icon', href: logo},
+    {rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png'},
+    {rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png'},
+    {rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png'},
+    {rel: 'manifest', href: '/site.webmanifest'},
+  ]
 })))
 
 

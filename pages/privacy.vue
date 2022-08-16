@@ -5,7 +5,6 @@ definePageMeta({
   layout: 'legal',
   description: 'Privacy',
   title: 't:legal.privacy',
-  image: '/image.jpgggg',
 });
 </script>
 

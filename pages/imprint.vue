@@ -6,8 +6,7 @@ import {definePageMeta} from "#imports";
 definePageMeta({
   layout: 'legal',
   description: 'Imprint',
-  title: 't:legal.imprint',
-  image: '/image.jpgggg',
+  title: 't:legal.imprint'
 });
 </script>
 
